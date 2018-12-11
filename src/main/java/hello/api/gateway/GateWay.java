@@ -57,7 +57,7 @@ public class GateWay {
     static final String URL_API_STATISTIC_DELETE = URL_API_STATISTIC.concat("delete");
 
     //----------------------------------STATONLINE  API----------------------------------------
-    static final String URL_API_STATONLINE = "https://my-api-statonline.herokuapp.com/";
+    static final String URL_API_STATONLINE = "https://my-api-statonline.herokuapp.com/api-statOnline/";
 
     static final String URL_API_STATONLINE_CREATE_STAT = URL_API_STATONLINE.concat("create");
     static final String URL_API_STATONLINE_GET_STAT = URL_API_STATONLINE.concat("get");
