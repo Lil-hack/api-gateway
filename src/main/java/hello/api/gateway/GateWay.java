@@ -33,7 +33,7 @@ import java.util.*;
 public class GateWay {
     private static final Logger logger = LoggerFactory.getLogger(GateWay.class);
     //----------------------------------USERS API----------------------------------------
-    static final String URL_API_USERS = "https://my-api-users.herokuapp.com//api-users/";
+    static final String URL_API_USERS = "https://my-api-users.herokuapp.com/api-users/";
 
     static final String URL_API_USERS_LOGIN = URL_API_USERS.concat("login");
     static final String URL_API_USERS_REGISTR = URL_API_USERS.concat("create");
