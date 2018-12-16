@@ -144,7 +144,7 @@ public class GateWay {
         }
     }
     @PostMapping("/user.login")
-    public ResponseEntity loginUser(@RequestBody UserInfo requestUserDetails) {
+    public ResponseEntity<UserInfo> loginUser(@RequestBody UserInfo requestUserDetails) {
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -159,8 +159,9 @@ public class GateWay {
 
             HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
 
+          UserInfo  result=   restTemplate.postForObject(url, entity, UserInfo.class);
 
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(result,HttpStatus.OK);
         } catch (Exception e) {
             logger.error("user.createError", e);
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
