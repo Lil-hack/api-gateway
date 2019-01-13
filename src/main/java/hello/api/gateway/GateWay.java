@@ -29,11 +29,12 @@ import java.util.*;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api-gateway")
 public class GateWay {
     private static final Logger logger = LoggerFactory.getLogger(GateWay.class);
     //----------------------------------USERS API----------------------------------------
-    static final String URL_API_USERS = "https://my-api-users.herokuapp.com/api-users/";
+    static final String URL_API_USERS = "https://api-my-users.herokuapp.com/api-users/";
 
     static final String URL_API_USERS_LOGIN = URL_API_USERS.concat("login");
     static final String URL_API_USERS_REGISTR = URL_API_USERS.concat("create");
@@ -45,7 +46,7 @@ public class GateWay {
     static final String URL_API_USERS_ALL = URL_API_USERS.concat("getAll");
 
     //----------------------------------STATISTIC  API----------------------------------------
-    static final String URL_API_STATISTIC = "https://my-api-statistic.herokuapp.com/api-statistic/";
+    static final String URL_API_STATISTIC = "https://api-my-statistic.herokuapp.com/api-statistic/";
 
     static final String URL_API_STATISTIC_CREATE_STAT = URL_API_STATISTIC.concat("create");
     static final String URL_API_STATISTIC_UPDATE_UUID = URL_API_STATISTIC.concat("updateUUID");
@@ -57,7 +58,7 @@ public class GateWay {
     static final String URL_API_STATISTIC_DELETE = URL_API_STATISTIC.concat("delete");
 
     //----------------------------------STATONLINE  API----------------------------------------
-    static final String URL_API_STATONLINE = "https://my-api-statonline.herokuapp.com/api-statOnline/";
+    static final String URL_API_STATONLINE = "https://api-my-onlinestat.herokuapp.com/api-statOnline/";
 
     static final String URL_API_STATONLINE_CREATE_STAT = URL_API_STATONLINE.concat("create");
     static final String URL_API_STATONLINE_GET_STAT = URL_API_STATONLINE.concat("get");
