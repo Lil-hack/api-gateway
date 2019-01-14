@@ -88,6 +88,7 @@ public class GateWay {
             HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
             UUID uuid =   restTemplate.postForObject(url, entity, UUID.class);
             requestUserDetails.setUid(uuid);
+            System.out.println("user vce norm");
             RestTemplate restTemplate2 = new RestTemplate();
 
             String url2 = URL_API_STATISTIC_CREATE_STAT;
@@ -96,7 +97,7 @@ public class GateWay {
 
             HttpEntity<String> entity2 = new HttpEntity<String>(requestJson,headers2);
             restTemplate2.postForObject(url2, entity2, String.class);
-
+            System.out.println("stat vce norm");
             RestTemplate restTemplate3 = new RestTemplate();
 
             String url3 = URL_API_STATONLINE_CREATE_STAT;
