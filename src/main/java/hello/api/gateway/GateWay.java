@@ -80,7 +80,7 @@ public class GateWay {
             String url = URL_API_USERS_REGISTR;
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
-            String requestJson =  ow.writeValueAsString(requestUserDetails);;
+            String requestJson =  ow.writeValueAsString(requestUserDetails);
             System.out.println("jsoon"+requestJson);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -89,7 +89,7 @@ public class GateWay {
             UUID uuid =   restTemplate.postForObject(url, entity, UUID.class);
             requestUserDetails.setUid(uuid);
             System.out.println("user vce norm");
-            RestTemplate restTemplate2 = new RestTemplate();
+        //    RestTemplate restTemplate2 = new RestTemplate();
 
 //            String url2 = URL_API_STATISTIC_CREATE_STAT;
 //            HttpHeaders headers2 = new HttpHeaders();
@@ -98,15 +98,21 @@ public class GateWay {
 //            HttpEntity<String> entity2 = new HttpEntity<String>(requestJson,headers2);
 //            restTemplate2.postForObject(url2, entity2, String.class);
 //            System.out.println("stat vce norm");
+            ObjectWriter ow2 = new ObjectMapper().writer().withDefaultPrettyPrinter();
+UserInfo usermmy=new UserInfo();
+            usermmy.setUid(uuid);
+            usermmy.setVk(requestUserDetails.getVk());
+            String requestJson2 =  ow2.writeValueAsString(usermmy);
+            System.out.println("jsoon2"+requestJson2);
             RestTemplate restTemplate3 = new RestTemplate();
 
             String url3 = URL_API_STATONLINE_CREATE_STAT;
             HttpHeaders headers3 = new HttpHeaders();
             headers3.setContentType(MediaType.APPLICATION_JSON);
 
-            HttpEntity<String> entity3 = new HttpEntity<String>(requestJson,headers3);
+            HttpEntity<String> entity3 = new HttpEntity<String>(requestJson2,headers3);
             restTemplate3.postForObject(url3, entity3, String.class);
-
+            System.out.println(" vce norm end");
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("user.createError", e);
