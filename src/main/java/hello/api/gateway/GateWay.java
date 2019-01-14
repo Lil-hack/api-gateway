@@ -91,13 +91,13 @@ public class GateWay {
             System.out.println("user vce norm");
             RestTemplate restTemplate2 = new RestTemplate();
 
-            String url2 = URL_API_STATISTIC_CREATE_STAT;
-            HttpHeaders headers2 = new HttpHeaders();
-            headers2.setContentType(MediaType.APPLICATION_JSON);
-
-            HttpEntity<String> entity2 = new HttpEntity<String>(requestJson,headers2);
-            restTemplate2.postForObject(url2, entity2, String.class);
-            System.out.println("stat vce norm");
+//            String url2 = URL_API_STATISTIC_CREATE_STAT;
+//            HttpHeaders headers2 = new HttpHeaders();
+//            headers2.setContentType(MediaType.APPLICATION_JSON);
+//
+//            HttpEntity<String> entity2 = new HttpEntity<String>(requestJson,headers2);
+//            restTemplate2.postForObject(url2, entity2, String.class);
+//            System.out.println("stat vce norm");
             RestTemplate restTemplate3 = new RestTemplate();
 
             String url3 = URL_API_STATONLINE_CREATE_STAT;
