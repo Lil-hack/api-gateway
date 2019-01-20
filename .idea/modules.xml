@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/../api-statistic/gs-spring-boot (1).iml" filepath="$PROJECT_DIR$/../api-statistic/gs-spring-boot (1).iml" />
       <module fileurl="file://$PROJECT_DIR$/../api.statistic/gs-spring-boot (1).iml" filepath="$PROJECT_DIR$/../api.statistic/gs-spring-boot (1).iml" />
       <module fileurl="file://$PROJECT_DIR$/../api-statonline/gs-spring-boot (2).iml" filepath="$PROJECT_DIR$/../api-statonline/gs-spring-boot (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/../api-users/gs-spring-boot (3).iml" filepath="$PROJECT_DIR$/../api-users/gs-spring-boot (3).iml" />
     </modules>
   </component>
 </project>
