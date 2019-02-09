@@ -119,7 +119,7 @@ private boolean OauthCheckToken(String token)
 }
 
     @PostMapping("/oauth20/applications")
-    public ResponseEntity<String> registrationApplic(@RequestHeader(value="Authorization",required = false) String token, @RequestBody String requestDetails) {
+    public ResponseEntity<String> registrationApplic(@RequestHeader(value="Authorization",required = false) String token, @RequestBody OauthApp requestDetails) {
         try {
 
             RestTemplate restTemplate = new RestTemplate();

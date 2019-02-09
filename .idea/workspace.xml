@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4ce9154-d5df-4f41-b886-20c264b032e8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/../api.statistic/target/" />
@@ -24,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="683">
-              <caret line="193" column="55" lean-forward="true" selection-start-line="193" selection-start-column="55" selection-end-line="193" selection-end-column="55" />
+            <state relative-caret-position="326">
+              <caret line="121" column="143" selection-start-line="121" selection-start-column="143" selection-end-line="121" selection-end-column="143" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4392#5988#0" />
@@ -40,8 +38,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/models/OauthApp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" selection-start-line="5" selection-end-line="9" selection-end-column="27" />
+            <state relative-caret-position="68">
+              <caret line="4" column="21" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -439,7 +437,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="A&#9;PSI&#9;JAVA://hello.Application" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549746068282" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549747233944" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../api-statonline/pom.xml" />
@@ -1157,15 +1155,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/models/OauthApp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" selection-start-line="5" selection-end-line="9" selection-end-column="27" />
+        <state relative-caret-position="68">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="683">
-          <caret line="193" column="55" lean-forward="true" selection-start-line="193" selection-start-column="55" selection-end-line="193" selection-end-column="55" />
+        <state relative-caret-position="326">
+          <caret line="121" column="143" selection-start-line="121" selection-start-column="143" selection-end-line="121" selection-end-column="143" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4392#5988#0" />
