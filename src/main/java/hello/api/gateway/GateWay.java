@@ -29,11 +29,12 @@ import java.util.*;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api-gateway")
 public class GateWay {
     private static final Logger logger = LoggerFactory.getLogger(GateWay.class);
     //----------------------------------USERS API----------------------------------------
-    static final String URL_API_USERS = "https://my-api-users.herokuapp.com/api-users/";
+    static final String URL_API_USERS = "https://api-my-users.herokuapp.com/api-users/";
 
     static final String URL_API_USERS_LOGIN = URL_API_USERS.concat("login");
     static final String URL_API_USERS_REGISTR = URL_API_USERS.concat("create");
@@ -45,7 +46,7 @@ public class GateWay {
     static final String URL_API_USERS_ALL = URL_API_USERS.concat("getAll");
 
     //----------------------------------STATISTIC  API----------------------------------------
-    static final String URL_API_STATISTIC = "https://my-api-statistic.herokuapp.com/api-statistic/";
+    static final String URL_API_STATISTIC = "https://api-my-statistic.herokuapp.com/api-statistic/";
 
     static final String URL_API_STATISTIC_CREATE_STAT = URL_API_STATISTIC.concat("create");
     static final String URL_API_STATISTIC_UPDATE_UUID = URL_API_STATISTIC.concat("updateUUID");
@@ -57,7 +58,7 @@ public class GateWay {
     static final String URL_API_STATISTIC_DELETE = URL_API_STATISTIC.concat("delete");
 
     //----------------------------------STATONLINE  API----------------------------------------
-    static final String URL_API_STATONLINE = "https://my-api-statonline.herokuapp.com/api-statOnline/";
+    static final String URL_API_STATONLINE = "https://api-my-onlinestat.herokuapp.com/api-statOnline/";
 
     static final String URL_API_STATONLINE_CREATE_STAT = URL_API_STATONLINE.concat("create");
     static final String URL_API_STATONLINE_GET_STAT = URL_API_STATONLINE.concat("get");
@@ -79,7 +80,7 @@ public class GateWay {
             String url = URL_API_USERS_REGISTR;
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
-            String requestJson =  ow.writeValueAsString(requestUserDetails);;
+            String requestJson =  ow.writeValueAsString(requestUserDetails);
             System.out.println("jsoon"+requestJson);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -87,24 +88,32 @@ public class GateWay {
             HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
             UUID uuid =   restTemplate.postForObject(url, entity, UUID.class);
             requestUserDetails.setUid(uuid);
+            System.out.println("user vce norm");
+            ObjectWriter ow2 = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            UserInfo usermmy=new UserInfo();
+            usermmy.setUid(uuid);
+            usermmy.setVk(requestUserDetails.getVk());
+            String requestJson2 =  ow2.writeValueAsString(usermmy);
             RestTemplate restTemplate2 = new RestTemplate();
 
             String url2 = URL_API_STATISTIC_CREATE_STAT;
             HttpHeaders headers2 = new HttpHeaders();
             headers2.setContentType(MediaType.APPLICATION_JSON);
 
-            HttpEntity<String> entity2 = new HttpEntity<String>(requestJson,headers2);
+            HttpEntity<String> entity2 = new HttpEntity<String>(requestJson2,headers2);
             restTemplate2.postForObject(url2, entity2, String.class);
+            System.out.println("stat vce norm");
 
+            System.out.println("jsoon2"+requestJson2);
             RestTemplate restTemplate3 = new RestTemplate();
 
             String url3 = URL_API_STATONLINE_CREATE_STAT;
             HttpHeaders headers3 = new HttpHeaders();
             headers3.setContentType(MediaType.APPLICATION_JSON);
 
-            HttpEntity<String> entity3 = new HttpEntity<String>(requestJson,headers3);
+            HttpEntity<String> entity3 = new HttpEntity<String>(requestJson2,headers3);
             restTemplate3.postForObject(url3, entity3, String.class);
-
+            System.out.println(" vce norm end");
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("user.createError", e);
@@ -208,17 +217,41 @@ public class GateWay {
                     HttpMethod.PUT, requestUserInfoEntity, new ParameterizedTypeReference<UserInfo>() {
                     });
 
-            Map<String, String> info = new HashMap<String, String>();
-            info.put("uid", requestUserDetails.getUid().toString());
-            info.put("vk", requestUserDetails.getVk());
+            UriComponentsBuilder builder2 = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_DELETE)
+                    .queryParam("uuid", requestUserDetails.getUid());
 
             RestTemplate restTemplate2 = new RestTemplate();
-            HttpHeaders userInfohead2 = new HttpHeaders();
-            userInfohead2.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<Map<String, String>> requestUserInfoEntity2 = new HttpEntity<>(info, userInfohead);
-            restTemplate2.exchange(URL_API_STATISTIC_UPDATE_VK,
-                    HttpMethod.PUT, requestUserInfoEntity2, new ParameterizedTypeReference<Map<String, String>>() {
-                    });
+            restTemplate2.delete(builder2.toUriString(), String.class);
+
+            UriComponentsBuilder builder3 = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_DELETE)
+                    .queryParam("uuid", requestUserDetails.getUid());
+
+            RestTemplate restTemplate3 = new RestTemplate();
+            restTemplate3.delete(builder3.toUriString(), String.class);
+
+            ObjectWriter ow2 = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            UserInfo usermmy=new UserInfo();
+            usermmy.setUid(requestUserDetails.getUid());
+            usermmy.setVk(requestUserDetails.getVk());
+            String requestJson2 =  ow2.writeValueAsString(usermmy);
+            RestTemplate restTemplate4 = new RestTemplate();
+
+            String url2 = URL_API_STATISTIC_CREATE_STAT;
+            HttpHeaders headers2 = new HttpHeaders();
+            headers2.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<String> entity2 = new HttpEntity<String>(requestJson2,headers2);
+            restTemplate4.postForObject(url2, entity2, String.class);
+
+            RestTemplate restTemplate5 = new RestTemplate();
+
+            String url3 = URL_API_STATONLINE_CREATE_STAT;
+            HttpHeaders headers3 = new HttpHeaders();
+            headers3.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<String> entity3 = new HttpEntity<String>(requestJson2,headers3);
+            restTemplate5.postForObject(url3, entity3, String.class);
+            System.out.println(" vce norm end");
 
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
