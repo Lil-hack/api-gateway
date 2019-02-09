@@ -1,15 +1,17 @@
 package hello.api.gateway;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-import hello.api.gateway.models.StatOnlineInfo;
-import hello.api.gateway.models.StatisticInfo;
-import hello.api.gateway.models.UserInfo;
+import hello.api.gateway.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -68,11 +70,155 @@ public class GateWay {
     static final String URL_API_STATONLINE_FIND_MONTH_STATS = URL_API_STATONLINE.concat("getMonth");
     static final String URL_API_STATONLINE_DELETE = URL_API_STATONLINE.concat("delete");
 
+    //----------------------------------OAUTH2  API----------------------------------------
+    static final String URL_API_OAUTH = "http://ec2-18-195-210-158.eu-central-1.compute.amazonaws.com:8090";
+
+     static final String AUTH_CODE_URI = URL_API_OAUTH.concat("/oauth20/auth-codes");
+     static final String ACCESS_TOKEN_URI = URL_API_OAUTH.concat("/oauth20/tokens");
+     static final String ACCESS_TOKEN_VALIDATE_URI = URL_API_OAUTH.concat("/oauth20/tokens/validate");
+     static final String APPLICATION_URI =URL_API_OAUTH.concat("/oauth20/applications");
+
+    ////////////////////////////////OAUTH API////////////////////////////////////
+private boolean OauthCheckToken(String token)
+{
+
+    if(token==null)
+        return false;
+    else {
+        try {
+            String token2 = token.replace("Bearer ", "");
+            System.out.println(token2);
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ACCESS_TOKEN_VALIDATE_URI)
+                    .queryParam("token", token2);
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+            JsonFactory factory = new JsonFactory();
+
+            ObjectMapper mapper = new ObjectMapper(factory);
+            JsonNode rootNode = mapper.readTree(result);
+
+            Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
+
+            while (fieldsIterator.hasNext()) {
+
+                Map.Entry<String, JsonNode> field = fieldsIterator.next();
+
+                System.out.println(field.getKey());
+                if (field.getKey() == "error") {
+                    return false;
+                }
+
+            }
+            return  true;
+        } catch (Exception e) {
+            logger.error("oauth", e);
+            return  false;
+        }
+    }
+}
+
+    @PostMapping("/oauth20/applications")
+    public ResponseEntity<String> registrationApplic(@RequestHeader(value="Authorization",required = false) String token, @RequestBody String requestDetails) {
+        try {
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            String url = APPLICATION_URI;
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+
+            String requestJson =  ow.writeValueAsString(requestDetails);
+            System.out.println("jsoon"+requestJson);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
+
+            String response= restTemplate.postForObject(url, entity, String.class);
+            System.out.println("user vce norm"+response);
+
+            //put method
+
+//            RestTemplate restTemplate2 = new RestTemplate();
+//
+//            HttpHeaders headers2 = new HttpHeaders();
+//            headers.setContentType(MediaType.APPLICATION_JSON);
+//            HttpEntity<String> requestEntity2 = new HttpEntity<String>("{\"status\":\"1\"}", headers2);
+//            restTemplate2.exchange(url, HttpMethod.PUT, requestEntity2, String.class);
+
+            return new ResponseEntity(response,HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("user.createError", e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/oauth20/authorize")
+    public ResponseEntity<String> getCode(@RequestHeader(value="Authorization",required = false) String token,
+                                          @RequestParam String client_id,@RequestParam String response_type,@RequestParam String redirect_uri) {
+        try {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(AUTH_CODE_URI)
+                    .queryParam("client_id", client_id).queryParam("response_type", response_type).queryParam("redirect_uri", redirect_uri);
+
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+
+            return new ResponseEntity(result, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("user.getError", e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/oauth20/tokens")
+    public ResponseEntity<String> getToken(@RequestHeader(value="Authorization",required = false) String token,
+                                           @RequestBody OauthToken requestDetails) {
+        try {
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            String url = ACCESS_TOKEN_URI;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+
+            MultiValueMap<String, String> map =
+                    new LinkedMultiValueMap<String, String>();
+            map.add("client_id",requestDetails.getClient_id());
+            map.add("client_secret",requestDetails.getClient_secret());
+            map.add("grant_type",requestDetails.getGrant_type());
+            if(requestDetails.getCode()!=null)
+            map.add("code",requestDetails.getCode());
+            map.add("redirect_uri",requestDetails.getRedirect_uri());
+            if(requestDetails.getRefresh_token()!=null)
+                map.add("refresh_token",requestDetails.getRefresh_token());
+
+            HttpEntity<MultiValueMap<String, String>> entity =
+                    new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+            String response= restTemplate.postForObject(url, entity, String.class);
+            System.out.println("user vce norm"+response);
+
+            //put method
+
+//            RestTemplate restTemplate2 = new RestTemplate();
+//
+//            HttpHeaders headers2 = new HttpHeaders();
+//            headers.setContentType(MediaType.APPLICATION_JSON);
+//            HttpEntity<String> requestEntity2 = new HttpEntity<String>("{\"status\":\"1\"}", headers2);
+//            restTemplate2.exchange(url, HttpMethod.PUT, requestEntity2, String.class);
+
+            return new ResponseEntity(response,HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("user.createError", e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     ////////////////////////////////USER API////////////////////////////////////
-
     @PostMapping("/user.create")
-    public ResponseEntity registrationUser(@RequestBody UserInfo requestUserDetails) {
+    public ResponseEntity registrationUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UserInfo requestUserDetails) {
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -122,7 +268,7 @@ public class GateWay {
     }
 
     @GetMapping("/user.get{uuid}")
-    public ResponseEntity<UserInfo> getUser(@RequestParam UUID uuid) {
+    public ResponseEntity<UserInfo> getUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_GET)
                     .queryParam("uuid", uuid);
@@ -138,7 +284,11 @@ public class GateWay {
     }
 
     @GetMapping("/user.getAll")
-    public ResponseEntity<List<UserInfo>> getUserAll() {
+    public ResponseEntity<List<UserInfo>> getUserAll(@RequestHeader(value="Authorization",required = false) String token) {
+    if(!OauthCheckToken(token))
+       return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
+
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_ALL);
 
@@ -153,7 +303,7 @@ public class GateWay {
         }
     }
     @PostMapping("/user.login")
-    public ResponseEntity<UserInfo> loginUser(@RequestBody UserInfo requestUserDetails) {
+    public ResponseEntity<UserInfo> loginUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -177,7 +327,7 @@ public class GateWay {
         }
     }
     @PutMapping("/user.updateUUID")
-    public ResponseEntity updateUuidUser(@RequestBody UserInfo requestUserDetails) {
+    public ResponseEntity updateUuidUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
         try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders userInfohead = new HttpHeaders();
@@ -207,7 +357,7 @@ public class GateWay {
     }
 
     @PutMapping("/user.updateVK")
-    public ResponseEntity updateVkUser(@RequestBody UserInfo requestUserDetails) {
+    public ResponseEntity updateVkUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
         try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders userInfohead = new HttpHeaders();
@@ -260,7 +410,7 @@ public class GateWay {
         }
     }
     @DeleteMapping("/user.delete{uuid}")
-    public ResponseEntity deleteUser(@RequestParam UUID uuid) {
+    public ResponseEntity deleteUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         try {
 
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_DELETE)
@@ -289,7 +439,7 @@ public class GateWay {
     }
     ///////////////////////////////Statistic API///////////////////////////////
     @PostMapping("/statistic.create")
-    public ResponseEntity createStatistic(@RequestBody UserInfo info) {
+    public ResponseEntity createStatistic(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo info) {
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -313,7 +463,7 @@ public class GateWay {
     }
 
     @GetMapping("/statistic.getAll")
-    public ResponseEntity<List<StatisticInfo>> getStatAll(@RequestParam UUID uuid) {
+    public ResponseEntity<List<StatisticInfo>> getStatAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_ALL_STATS)
                     .queryParam("uuid", uuid);
@@ -330,7 +480,7 @@ public class GateWay {
     }
 
     @GetMapping("/statistic.getWeek")
-    public ResponseEntity<List<StatisticInfo>> getStatWeek(@RequestParam UUID uuid) {
+    public ResponseEntity<List<StatisticInfo>> getStatWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_WEEK_STATS)
                     .queryParam("uuid", uuid);
@@ -347,7 +497,7 @@ public class GateWay {
     }
 
     @GetMapping("/statistic.getMonth")
-    public ResponseEntity<List<StatisticInfo>> getStatMonth(@RequestParam UUID uuid) {
+    public ResponseEntity<List<StatisticInfo>> getStatMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_MONTH_STATS)
                     .queryParam("uuid", uuid);
@@ -364,7 +514,7 @@ public class GateWay {
     }
 
     @GetMapping("/statistic.get")
-    public ResponseEntity<StatisticInfo> getStat( @RequestParam UUID uuid) {
+    public ResponseEntity<StatisticInfo> getStat(@RequestHeader(value="Authorization",required = false) String token, @RequestParam UUID uuid) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_GET)
                     .queryParam("uuid", uuid);
@@ -373,7 +523,7 @@ public class GateWay {
             UserInfo user = restTemplate.getForObject(builder.toUriString(), UserInfo.class);
 
             UriComponentsBuilder builder2 = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_GET_STAT)
-                    .queryParam("vk", user.getVk()).queryParam("uuid", uuid);;
+                    .queryParam("vk", user.getVk()).queryParam("uuid", uuid);
 
             RestTemplate restTemplate2 = new RestTemplate();
             String result = restTemplate2.getForObject(builder2.toUriString(), String.class);
@@ -387,7 +537,7 @@ public class GateWay {
 
     ///////////////////////////////Statistic Online  API///////////////////////////////
     @PostMapping("/statOnline.create")
-    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineCreate(@RequestBody UserInfo info) {
+    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineCreate(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo info) {
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -410,7 +560,7 @@ public class GateWay {
         }
     }
     @GetMapping("/statOnline.getAll")
-    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineAll(@RequestParam UUID uuid) {
+    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_ALL_STATS)
                     .queryParam("uuid", uuid);
@@ -426,7 +576,7 @@ public class GateWay {
         }
     }
     @GetMapping("/statOnline.getDay")
-    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineDay(@RequestParam UUID uuid) {
+    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineDay(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_DAY_STATS)
                     .queryParam("uuid", uuid);
@@ -443,7 +593,7 @@ public class GateWay {
     }
 
     @GetMapping("/statOnline.getWeek")
-    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineWeek(@RequestParam UUID uuid) {
+    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_WEEK_STATS)
   .queryParam("uuid", uuid);
@@ -459,7 +609,7 @@ public class GateWay {
     }
 
     @GetMapping("/statOnline.getMonth")
-    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineMonth(@RequestParam UUID uuid) {
+    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_MONTH_STATS)
   .queryParam("uuid", uuid);
@@ -475,7 +625,7 @@ public class GateWay {
     }
 
     @GetMapping("/statOnline.get")
-    public ResponseEntity<StatOnlineInfo> getStatOnline(@RequestParam UUID uuid) {
+    public ResponseEntity<StatOnlineInfo> getStatOnline(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_GET)
                    .queryParam("uuid", uuid);
