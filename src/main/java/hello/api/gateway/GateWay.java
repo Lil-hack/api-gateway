@@ -544,7 +544,8 @@ System.out.println(result);
 
 
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+            String result = restTemplate.getForObject(builder.toUriString(), String.class,
+                    "Authorization","Bearer "+access_token);
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
