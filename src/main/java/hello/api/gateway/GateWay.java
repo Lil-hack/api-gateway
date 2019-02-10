@@ -464,6 +464,10 @@ private boolean OauthCheckToken(String token)
 
     @GetMapping("/statistic.getAll")
     public ResponseEntity<List<StatisticInfo>> getStatAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
+
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_ALL_STATS)
                     .queryParam("uuid", uuid);
