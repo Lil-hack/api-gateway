@@ -218,7 +218,7 @@ private boolean OauthCheckToken(String token)
 
     ////////////////////////////////USER API////////////////////////////////////
     @PostMapping("/user.create")
-    public ResponseEntity registrationUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UserInfo requestUserDetails) {
+    public ResponseEntity registrationUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
         try {
 
             RestTemplate restTemplate = new RestTemplate();
