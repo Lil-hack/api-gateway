@@ -467,6 +467,8 @@ private boolean OauthCheckToken(String token)
 
     @GetMapping("/statistic.getAll")
     public ResponseEntity<List<StatisticInfo>> getStatAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+        System.out.println("user vce norm");
+        System.out.println("user vce norm"+token);
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
 

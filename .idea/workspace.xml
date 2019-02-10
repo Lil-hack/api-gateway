@@ -22,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="487">
-              <caret line="90" column="21" selection-start-line="90" selection-start-column="21" selection-end-line="90" selection-end-column="21" />
+            <state relative-caret-position="452">
+              <caret line="469" column="44" lean-forward="true" selection-start-line="469" selection-start-column="44" selection-end-line="469" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5586#7003#0" />
@@ -31,7 +31,6 @@
                 <element signature="e#8041#9566#0" />
                 <element signature="e#8960#8976#0" expanded="true" />
                 <element signature="e#9052#9083#0" expanded="true" />
-                <element signature="e#3814#6113#0" />
                 <element signature="e#18524#18532#0" expanded="true" />
               </folding>
             </state>
@@ -486,7 +485,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="A&#9;PSI&#9;JAVA://hello.Application" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549815756509" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549816083965" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../api-statonline/pom.xml" />
@@ -1211,8 +1210,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
-          <caret line="90" column="21" selection-start-line="90" selection-start-column="21" selection-end-line="90" selection-end-column="21" />
+        <state relative-caret-position="452">
+          <caret line="469" column="44" lean-forward="true" selection-start-line="469" selection-start-column="44" selection-end-line="469" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5586#7003#0" />
@@ -1220,7 +1219,6 @@
             <element signature="e#8041#9566#0" />
             <element signature="e#8960#8976#0" expanded="true" />
             <element signature="e#9052#9083#0" expanded="true" />
-            <element signature="e#3814#6113#0" />
             <element signature="e#18524#18532#0" expanded="true" />
           </folding>
         </state>
