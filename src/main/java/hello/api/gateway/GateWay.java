@@ -78,6 +78,9 @@ public class GateWay {
      static final String ACCESS_TOKEN_VALIDATE_URI = URL_API_OAUTH.concat("/oauth20/tokens/validate");
      static final String APPLICATION_URI =URL_API_OAUTH.concat("/oauth20/applications");
 
+    static final String CLIENT_ID="9aa3ae11759ae257e2f29484a32820845ae59763";
+    static final String CLIENT_SECRET="3997673d7814bbbcde139fe181e7fba723beb70a4e6e49363230ff78051f40d1";
+    private String access_token;
     ////////////////////////////////OAUTH API////////////////////////////////////
 private boolean OauthCheckToken(String token)
 {
@@ -120,6 +123,41 @@ private boolean OauthCheckToken(String token)
         }
     }
 }
+
+    private String OauthGetToken()
+    {
+
+        try {
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            String url = ACCESS_TOKEN_URI;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+
+            MultiValueMap<String, String> map =
+                    new LinkedMultiValueMap<String, String>();
+            map.add("client_id",CLIENT_ID);
+            map.add("client_secret",CLIENT_SECRET);
+            map.add("grant_type","client_credentials");
+
+
+            HttpEntity<MultiValueMap<String, String>> entity =
+                    new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+            AccessTokenApi response= restTemplate.postForObject(url, entity, AccessTokenApi.class);
+            System.out.println("user vce norm"+response);
+
+
+            return response.getAccess_token();
+        } catch (Exception e) {
+            logger.error("user.createError", e);
+            return null;
+        }
+
+    }
 
     @PostMapping("/oauth20/applications")
     public ResponseEntity<String> registrationApplic(@RequestHeader(value="Authorization",required = false) String token, @RequestBody OauthApp requestDetails) {
@@ -223,6 +261,9 @@ private boolean OauthCheckToken(String token)
     @PostMapping("/user.create")
     public ResponseEntity registrationUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
         try {
+            access_token=OauthGetToken();
+            if(access_token==null)
+                return new ResponseEntity(HttpStatus.FORBIDDEN);
 
             RestTemplate restTemplate = new RestTemplate();
 
@@ -233,7 +274,7 @@ private boolean OauthCheckToken(String token)
             System.out.println("jsoon"+requestJson);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-
+            headers.set("Authorization","Bearer "+access_token);
             HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
             UUID uuid =   restTemplate.postForObject(url, entity, UUID.class);
             requestUserDetails.setUid(uuid);
@@ -248,7 +289,7 @@ private boolean OauthCheckToken(String token)
             String url2 = URL_API_STATISTIC_CREATE_STAT;
             HttpHeaders headers2 = new HttpHeaders();
             headers2.setContentType(MediaType.APPLICATION_JSON);
-
+            headers2.set("Authorization","Bearer "+access_token);
             HttpEntity<String> entity2 = new HttpEntity<String>(requestJson2,headers2);
             restTemplate2.postForObject(url2, entity2, String.class);
             System.out.println("stat vce norm");
@@ -259,7 +300,7 @@ private boolean OauthCheckToken(String token)
             String url3 = URL_API_STATONLINE_CREATE_STAT;
             HttpHeaders headers3 = new HttpHeaders();
             headers3.setContentType(MediaType.APPLICATION_JSON);
-
+            headers3.set("Authorization","Bearer "+access_token);
             HttpEntity<String> entity3 = new HttpEntity<String>(requestJson2,headers3);
             restTemplate3.postForObject(url3, entity3, String.class);
             System.out.println(" vce norm end");
