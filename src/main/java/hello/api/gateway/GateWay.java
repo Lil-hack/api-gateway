@@ -88,12 +88,14 @@ private boolean OauthCheckToken(String token)
         try {
             String token2 = token.replace("Bearer ", "");
             System.out.println(token2);
-            logger.info("oauth", token2);
+            logger.info("oauth"+ token2);
+            logger.debug("oauth"+ token2);
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ACCESS_TOKEN_VALIDATE_URI)
                     .queryParam("token", token2);
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(builder.toUriString(), String.class);
-            logger.info("result", result);
+            logger.info("result"+ result);
+            logger.debug("result"+ result);
             JsonFactory factory = new JsonFactory();
 
             ObjectMapper mapper = new ObjectMapper(factory);
