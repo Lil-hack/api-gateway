@@ -208,11 +208,11 @@ private boolean OauthCheckToken(String token)
         }
     }
     @GetMapping("/oauth20/tokens/validate")
-    public ResponseEntity<String> validToken(@RequestHeader(value="Authorization",required = false) String token,
-                                          @RequestParam String oauth_token) {
+    public ResponseEntity<String> validToken(
+                                          @RequestParam String token) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ACCESS_TOKEN_VALIDATE_URI)
-                    .queryParam("token", oauth_token);
+                    .queryParam("token", token);
 
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(builder.toUriString(), String.class);
