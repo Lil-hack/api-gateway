@@ -90,15 +90,12 @@ private boolean OauthCheckToken(String token)
     else {
         try {
             String token2 = token.replace("Bearer ", "");
-            System.out.println(token2);
-            logger.info("oauth"+ token2);
-            logger.debug("oauth"+ token2);
+
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ACCESS_TOKEN_VALIDATE_URI)
                     .queryParam("token", token2);
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(builder.toUriString(), String.class);
-            logger.info("result"+ result);
-            logger.debug("result"+ result);
+
             JsonFactory factory = new JsonFactory();
 
             ObjectMapper mapper = new ObjectMapper(factory);
@@ -204,6 +201,22 @@ private boolean OauthCheckToken(String token)
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(builder.toUriString(), String.class);
 
+            return new ResponseEntity(result, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("user.getError", e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/oauth20/tokens/validate")
+    public ResponseEntity<String> validToken(@RequestHeader(value="Authorization",required = false) String token,
+                                          @RequestParam String oauth_token) {
+        try {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ACCESS_TOKEN_VALIDATE_URI)
+                    .queryParam("token", oauth_token);
+
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("user.getError", e);
