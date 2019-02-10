@@ -272,6 +272,8 @@ private boolean OauthCheckToken(String token)
 
     @GetMapping("/user.get{uuid}")
     public ResponseEntity<UserInfo> getUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_GET)
                     .queryParam("uuid", uuid);
@@ -307,6 +309,7 @@ private boolean OauthCheckToken(String token)
     }
     @PostMapping("/user.login")
     public ResponseEntity<UserInfo> loginUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
+
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -331,6 +334,8 @@ private boolean OauthCheckToken(String token)
     }
     @PutMapping("/user.updateUUID")
     public ResponseEntity updateUuidUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
         try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders userInfohead = new HttpHeaders();
@@ -361,6 +366,8 @@ private boolean OauthCheckToken(String token)
 
     @PutMapping("/user.updateVK")
     public ResponseEntity updateVkUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
         try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders userInfohead = new HttpHeaders();
@@ -414,7 +421,9 @@ private boolean OauthCheckToken(String token)
     }
     @DeleteMapping("/user.delete{uuid}")
     public ResponseEntity deleteUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
-        try {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    try {
 
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_DELETE)
                     .queryParam("uuid", uuid);
@@ -443,6 +452,8 @@ private boolean OauthCheckToken(String token)
     ///////////////////////////////Statistic API///////////////////////////////
     @PostMapping("/statistic.create")
     public ResponseEntity createStatistic(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo info) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -490,6 +501,9 @@ private boolean OauthCheckToken(String token)
 
     @GetMapping("/statistic.getWeek")
     public ResponseEntity<List<StatisticInfo>> getStatWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_WEEK_STATS)
                     .queryParam("uuid", uuid);
@@ -507,6 +521,9 @@ private boolean OauthCheckToken(String token)
 
     @GetMapping("/statistic.getMonth")
     public ResponseEntity<List<StatisticInfo>> getStatMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_MONTH_STATS)
                     .queryParam("uuid", uuid);
@@ -524,6 +541,9 @@ private boolean OauthCheckToken(String token)
 
     @GetMapping("/statistic.get")
     public ResponseEntity<StatisticInfo> getStat(@RequestHeader(value="Authorization",required = false) String token, @RequestParam UUID uuid) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_GET)
                     .queryParam("uuid", uuid);
@@ -547,6 +567,9 @@ private boolean OauthCheckToken(String token)
     ///////////////////////////////Statistic Online  API///////////////////////////////
     @PostMapping("/statOnline.create")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineCreate(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo info) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -570,6 +593,9 @@ private boolean OauthCheckToken(String token)
     }
     @GetMapping("/statOnline.getAll")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_ALL_STATS)
                     .queryParam("uuid", uuid);
@@ -586,6 +612,9 @@ private boolean OauthCheckToken(String token)
     }
     @GetMapping("/statOnline.getDay")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineDay(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_DAY_STATS)
                     .queryParam("uuid", uuid);
@@ -603,6 +632,9 @@ private boolean OauthCheckToken(String token)
 
     @GetMapping("/statOnline.getWeek")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_WEEK_STATS)
   .queryParam("uuid", uuid);
@@ -619,6 +651,9 @@ private boolean OauthCheckToken(String token)
 
     @GetMapping("/statOnline.getMonth")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_MONTH_STATS)
   .queryParam("uuid", uuid);
@@ -635,6 +670,9 @@ private boolean OauthCheckToken(String token)
 
     @GetMapping("/statOnline.get")
     public ResponseEntity<StatOnlineInfo> getStatOnline(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+        if(!OauthCheckToken(token))
+            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_GET)
                    .queryParam("uuid", uuid);
