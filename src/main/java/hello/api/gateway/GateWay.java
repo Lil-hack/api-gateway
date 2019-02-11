@@ -590,7 +590,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("statistic.getAllError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("lox",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
