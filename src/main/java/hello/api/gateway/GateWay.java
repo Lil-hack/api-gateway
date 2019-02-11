@@ -670,7 +670,7 @@ System.out.println(result);
 
             RestTemplate restTemplate2 = new RestTemplate();
             String result = restTemplate2.exchange(
-                    builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
+                    builder2.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
