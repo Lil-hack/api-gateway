@@ -812,36 +812,66 @@ System.out.println(result);
         }
     }
 
-    @GetMapping("/statOnline.get")
-    public ResponseEntity<StatOnlineInfo> getStatOnline(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+    @GetMapping("/statAll.get")
+    public ResponseEntity<StatOnlineInfo> getStatOnline(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid,@RequestParam String vk) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
-        try { HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization","Bearer "+access_token);
-            HttpEntity<String> entity = new HttpEntity<>(headers);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + access_token);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        StatAll statAll=new StatAll();
+        try {
 
-            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_GET)
-                    .queryParam("uuid", uuid);
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_GET_STAT)
+                    .queryParam("vk", vk).queryParam("uuid", uuid);
 
             RestTemplate restTemplate = new RestTemplate();
-            UserInfo user = restTemplate.exchange(
-                    builder.toUriString(), HttpMethod.GET, entity, UserInfo.class).getBody();
+            StatisticInfo statisticInfo = restTemplate.exchange(
+                    builder.toUriString(), HttpMethod.GET, entity, StatisticInfo.class).getBody();
 
+
+            statAll.setPhotoUrl(statisticInfo.getPhotoUrl());
+            statAll.setFirst_name(statisticInfo.getPhotoUrl());
+            statAll.setLast_name(statisticInfo.getPhotoUrl());
+            statAll.setAlbums(statisticInfo.getAlbums());
+            statAll.setVideos(statisticInfo.getVideos());
+            statAll.setAudios(statisticInfo.getAudios());
+            statAll.setNotes(statisticInfo.getNotes());
+            statAll.setPhotos(statisticInfo.getPhotos());
+            statAll.setGroups(statisticInfo.getGroups());
+            statAll.setGifts(statisticInfo.getGifts());
+            statAll.setFriends(statisticInfo.getFriends());
+            statAll.setUser_photos(statisticInfo.getUser_photos());
+            statAll.setFollowers(statisticInfo.getFollowers());
+            statAll.setSubscriptions(statisticInfo.getSubscriptions());
+            statAll.setPages(statisticInfo.getPages());
+
+
+        }catch (Exception e) {
+            statAll.setPhotoUrl(null);
+
+            }
+
+        try {
             UriComponentsBuilder builder2 = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_GET_STAT)
-                    .queryParam("vk", user.getVk()).queryParam("uuid", uuid);
+                    .queryParam("vk", vk).queryParam("uuid", uuid);
 
             RestTemplate restTemplate2 = new RestTemplate();
-            String result = restTemplate2.exchange(
-                    builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
+            StatOnlineInfo statOnlineInfo = restTemplate2.exchange(
+                    builder2.toUriString(), HttpMethod.GET, entity, StatOnlineInfo.class).getBody();
+            statAll.setMobile(statOnlineInfo.isMobile());
+            statAll.setOnline(statOnlineInfo.isOnline());
+            statAll.setUid(uuid.toString());
 
 
-            return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("statOnline.getError", e);
-            return new ResponseEntity(ErrorCodes.ERROR_503_STATONLINE.error(),HttpStatus.INTERNAL_SERVER_ERROR);
+
+            statAll.setUid(null);
         }
+
+        return new ResponseEntity(statAll, HttpStatus.OK);
     }
 
 
