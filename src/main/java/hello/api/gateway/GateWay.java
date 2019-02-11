@@ -9,7 +9,9 @@ import hello.api.gateway.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
@@ -86,17 +88,7 @@ public class GateWay {
     static final String CLIENT_SECRET="3997673d7814bbbcde139fe181e7fba723beb70a4e6e49363230ff78051f40d1";
     private String access_token;
     ////////////////////////////////OAUTH API////////////////////////////////////
-    @Autowired
-    private RedisTemplate<String, String> template;
 
-    // добавляем шаблон как ListOperations
-    // который может быть также и Value, Set, ZSet и HashOperations
-    @Resource(name="redisTemplate")
-    private ListOperations<String, String> listOps;
-    public void addLink(String userId, String url) {
-        listOps.leftPush(userId, url);
-    }
-        // или используем шаблон напрямую
 
         private boolean OauthCheckToken(String token)
 {
@@ -585,7 +577,7 @@ System.out.println(result);
     public ResponseEntity<List<StatisticInfo>> getStatAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         System.out.println("user vce norm");
         System.out.println("user vce norm"+token);
-     //   addLink("lox","sam");
+
 
         if(!OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
