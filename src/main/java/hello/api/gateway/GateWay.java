@@ -833,8 +833,8 @@ System.out.println(result);
 
 
             statAll.setPhotoUrl(statisticInfo.getPhotoUrl());
-            statAll.setFirst_name(statisticInfo.getPhotoUrl());
-            statAll.setLast_name(statisticInfo.getPhotoUrl());
+            statAll.setFirst_name(statisticInfo.getFirst_name());
+            statAll.setLast_name(statisticInfo.getLast_name());
             statAll.setAlbums(statisticInfo.getAlbums());
             statAll.setVideos(statisticInfo.getVideos());
             statAll.setAudios(statisticInfo.getAudios());
