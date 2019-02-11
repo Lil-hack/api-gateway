@@ -541,11 +541,12 @@ System.out.println(result);
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_ALL_STATS)
                     .queryParam("uuid", uuid);
-
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
 
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(builder.toUriString(), String.class,
-                    "Authorization","Bearer "+access_token);
+            String result = restTemplate.getForObject(builder.toUriString(), String.class,entity);
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
