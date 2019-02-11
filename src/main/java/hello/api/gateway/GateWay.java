@@ -8,12 +8,16 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import hello.api.gateway.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
+import javax.annotation.Resource;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
 
@@ -71,7 +75,7 @@ public class GateWay {
     static final String URL_API_STATONLINE_DELETE = URL_API_STATONLINE.concat("delete");
 
     //----------------------------------OAUTH2  API----------------------------------------
-    static final String URL_API_OAUTH = "http://ec2-18-195-210-158.eu-central-1.compute.amazonaws.com:8090";
+    static final String URL_API_OAUTH = "http://ec2-18-185-66-28.eu-central-1.compute.amazonaws.com:8090";
 
      static final String AUTH_CODE_URI = URL_API_OAUTH.concat("/oauth20/auth-codes");
      static final String ACCESS_TOKEN_URI = URL_API_OAUTH.concat("/oauth20/tokens");
@@ -82,7 +86,19 @@ public class GateWay {
     static final String CLIENT_SECRET="3997673d7814bbbcde139fe181e7fba723beb70a4e6e49363230ff78051f40d1";
     private String access_token;
     ////////////////////////////////OAUTH API////////////////////////////////////
-private boolean OauthCheckToken(String token)
+    @Autowired
+    private RedisTemplate<String, String> template;
+
+    // добавляем шаблон как ListOperations
+    // который может быть также и Value, Set, ZSet и HashOperations
+    @Resource(name="redisTemplate")
+    private ListOperations<String, String> listOps;
+    public void addLink(String userId, String url) {
+        listOps.leftPush(userId, url);
+    }
+        // или используем шаблон напрямую
+
+        private boolean OauthCheckToken(String token)
 {
 
     if(token==null)
@@ -569,6 +585,8 @@ System.out.println(result);
     public ResponseEntity<List<StatisticInfo>> getStatAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         System.out.println("user vce norm");
         System.out.println("user vce norm"+token);
+        addLink("lox","sam");
+
         if(!OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
 
