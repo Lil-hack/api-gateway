@@ -311,7 +311,7 @@ System.out.println(result);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("user.createError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("ошибка при создании пользователя.",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
