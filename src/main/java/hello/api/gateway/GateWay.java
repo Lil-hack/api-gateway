@@ -254,14 +254,6 @@ System.out.println(result);
             String response= restTemplate.postForObject(url, entity, String.class);
             System.out.println("user vce norm"+response);
 
-            //put method
-
-//            RestTemplate restTemplate2 = new RestTemplate();
-//
-//            HttpHeaders headers2 = new HttpHeaders();
-//            headers.setContentType(MediaType.APPLICATION_JSON);
-//            HttpEntity<String> requestEntity2 = new HttpEntity<String>("{\"status\":\"1\"}", headers2);
-//            restTemplate2.exchange(url, HttpMethod.PUT, requestEntity2, String.class);
 
             return new ResponseEntity(response,HttpStatus.CREATED);
         } catch (Exception e) {
@@ -274,9 +266,8 @@ System.out.println(result);
     @PostMapping("/user.create")
     public ResponseEntity registrationUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
         try {
-            access_token=OauthGetToken();
             if(access_token==null)
-                return new ResponseEntity(HttpStatus.FORBIDDEN);
+                access_token=OauthGetToken();
 
             RestTemplate restTemplate = new RestTemplate();
 
@@ -328,13 +319,20 @@ System.out.println(result);
     public ResponseEntity<UserInfo> getUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_GET)
                     .queryParam("uuid", uuid);
 
-            RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
 
+            RestTemplate restTemplate = new RestTemplate();
+            String result =
+                    restTemplate.exchange(
+                            builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("user.getError", e);
@@ -346,14 +344,20 @@ System.out.println(result);
     public ResponseEntity<List<UserInfo>> getUserAll(@RequestHeader(value="Authorization",required = false) String token) {
     if(!OauthCheckToken(token))
        return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
-
+        if(access_token==null)
+            access_token=OauthGetToken();
 
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_ALL);
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
 
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+            String result =
+                    restTemplate.exchange(
+                            builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
@@ -365,7 +369,8 @@ System.out.println(result);
     public ResponseEntity<UserInfo> loginUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
 
         try {
-
+            if(access_token==null)
+                access_token=OauthGetToken();
             RestTemplate restTemplate = new RestTemplate();
 
             String url = URL_API_USERS_LOGIN;
@@ -374,6 +379,7 @@ System.out.println(result);
             String requestJson =  ow.writeValueAsString(requestUserDetails);;
             System.out.println("jsoon"+requestJson);
             HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
@@ -390,6 +396,8 @@ System.out.println(result);
     public ResponseEntity updateUuidUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders userInfohead = new HttpHeaders();
@@ -422,10 +430,13 @@ System.out.println(result);
     public ResponseEntity updateVkUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders userInfohead = new HttpHeaders();
             userInfohead.setContentType(MediaType.APPLICATION_JSON);
+            userInfohead.set("Authorization","Bearer "+access_token);
             HttpEntity<UserInfo> requestUserInfoEntity = new HttpEntity<>(requestUserDetails, userInfohead);
             restTemplate.exchange(URL_API_USERS_UPDATE_VK,
                     HttpMethod.PUT, requestUserInfoEntity, new ParameterizedTypeReference<UserInfo>() {
@@ -434,37 +445,51 @@ System.out.println(result);
             UriComponentsBuilder builder2 = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_DELETE)
                     .queryParam("uuid", requestUserDetails.getUid());
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
             RestTemplate restTemplate2 = new RestTemplate();
-            restTemplate2.delete(builder2.toUriString(), String.class);
+
+            restTemplate2.exchange(
+                            builder2.toUriString(), HttpMethod.DELETE, entity, String.class);
 
             UriComponentsBuilder builder3 = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_DELETE)
                     .queryParam("uuid", requestUserDetails.getUid());
+            HttpHeaders headers2 = new HttpHeaders();
+            headers2.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity2 = new HttpEntity<>(headers);
 
             RestTemplate restTemplate3 = new RestTemplate();
-            restTemplate3.delete(builder3.toUriString(), String.class);
+
+            restTemplate3.exchange(
+                    builder3.toUriString(), HttpMethod.DELETE, entity2, String.class);
+
 
             ObjectWriter ow2 = new ObjectMapper().writer().withDefaultPrettyPrinter();
             UserInfo usermmy=new UserInfo();
             usermmy.setUid(requestUserDetails.getUid());
             usermmy.setVk(requestUserDetails.getVk());
             String requestJson2 =  ow2.writeValueAsString(usermmy);
+
             RestTemplate restTemplate4 = new RestTemplate();
 
             String url2 = URL_API_STATISTIC_CREATE_STAT;
-            HttpHeaders headers2 = new HttpHeaders();
-            headers2.setContentType(MediaType.APPLICATION_JSON);
+            HttpHeaders headers3 = new HttpHeaders();
+            headers3.setContentType(MediaType.APPLICATION_JSON);
+            headers3.set("Authorization","Bearer "+access_token);
 
-            HttpEntity<String> entity2 = new HttpEntity<String>(requestJson2,headers2);
-            restTemplate4.postForObject(url2, entity2, String.class);
+            HttpEntity<String> entity3 = new HttpEntity<String>(requestJson2,headers2);
+            restTemplate4.postForObject(url2, entity3, String.class);
 
             RestTemplate restTemplate5 = new RestTemplate();
 
             String url3 = URL_API_STATONLINE_CREATE_STAT;
-            HttpHeaders headers3 = new HttpHeaders();
-            headers3.setContentType(MediaType.APPLICATION_JSON);
-
-            HttpEntity<String> entity3 = new HttpEntity<String>(requestJson2,headers3);
-            restTemplate5.postForObject(url3, entity3, String.class);
+            HttpHeaders headers4 = new HttpHeaders();
+            headers4.setContentType(MediaType.APPLICATION_JSON);
+            headers4.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity4 = new HttpEntity<String>(requestJson2,headers3);
+            restTemplate5.postForObject(url3, entity4, String.class);
             System.out.println(" vce norm end");
 
             return new ResponseEntity(HttpStatus.OK);
@@ -477,25 +502,32 @@ System.out.println(result);
     public ResponseEntity deleteUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        if(access_token==null)
+            access_token=OauthGetToken();
     try {
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization","Bearer "+access_token);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_DELETE)
                     .queryParam("uuid", uuid);
 
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.delete(builder.toUriString(), String.class);
+        restTemplate.exchange(
+                builder.toUriString(), HttpMethod.DELETE, entity, String.class);
 
             UriComponentsBuilder builder2 = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_DELETE)
                     .queryParam("uuid", uuid);
 
             RestTemplate restTemplate2 = new RestTemplate();
-            restTemplate2.delete(builder2.toUriString(), String.class);
+        restTemplate2.exchange(
+                builder2.toUriString(), HttpMethod.DELETE, entity, String.class);;
 
             UriComponentsBuilder builder3 = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_DELETE)
                     .queryParam("uuid", uuid);
 
             RestTemplate restTemplate3 = new RestTemplate();
-            restTemplate3.delete(builder3.toUriString(), String.class);
+        restTemplate3.exchange(
+                builder3.toUriString(), HttpMethod.DELETE, entity, String.class);
 
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -508,6 +540,8 @@ System.out.println(result);
     public ResponseEntity createStatistic(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo info) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -519,6 +553,7 @@ System.out.println(result);
             System.out.println("jsoon"+requestJson);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization","Bearer "+access_token);
 
             HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
             restTemplate.postForObject(url, entity, String.class);
@@ -541,7 +576,7 @@ System.out.println(result);
         try {
             if(access_token==null)
             access_token=OauthGetToken();
-            
+
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_ALL_STATS)
                     .queryParam("uuid", uuid);
             HttpHeaders headers = new HttpHeaders();
@@ -563,14 +598,21 @@ System.out.println(result);
     public ResponseEntity<List<StatisticInfo>> getStatWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
-
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_WEEK_STATS)
                     .queryParam("uuid", uuid);
 
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+            String result =
+                    restTemplate.exchange(
+                            builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
@@ -583,14 +625,20 @@ System.out.println(result);
     public ResponseEntity<List<StatisticInfo>> getStatMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
-
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_MONTH_STATS)
                     .queryParam("uuid", uuid);
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
 
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+            String result =
+                    restTemplate.exchange(
+                            builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
@@ -603,19 +651,26 @@ System.out.println(result);
     public ResponseEntity<StatisticInfo> getStat(@RequestHeader(value="Authorization",required = false) String token, @RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
-
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_GET)
                     .queryParam("uuid", uuid);
 
             RestTemplate restTemplate = new RestTemplate();
-            UserInfo user = restTemplate.getForObject(builder.toUriString(), UserInfo.class);
+            UserInfo user = restTemplate.exchange(
+                    builder.toUriString(), HttpMethod.GET, entity, UserInfo.class).getBody();
 
             UriComponentsBuilder builder2 = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_GET_STAT)
                     .queryParam("vk", user.getVk()).queryParam("uuid", uuid);
 
             RestTemplate restTemplate2 = new RestTemplate();
-            String result = restTemplate2.getForObject(builder2.toUriString(), String.class);
+            String result = restTemplate2.exchange(
+                    builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
@@ -629,7 +684,8 @@ System.out.println(result);
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineCreate(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo info) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
-
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -641,7 +697,7 @@ System.out.println(result);
             System.out.println("jsoon"+requestJson);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-
+            headers.set("Authorization","Bearer "+access_token);
             HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
             restTemplate.postForObject(url, entity, String.class);
 
@@ -655,14 +711,21 @@ System.out.println(result);
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
-
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_ALL_STATS)
                     .queryParam("uuid", uuid);
 
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+            String result =
+                    restTemplate.exchange(
+                            builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
@@ -674,14 +737,21 @@ System.out.println(result);
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineDay(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
-
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_DAY_STATS)
                     .queryParam("uuid", uuid);
 
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+            String result =
+                    restTemplate.exchange(
+                            builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
@@ -694,13 +764,20 @@ System.out.println(result);
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
-
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_WEEK_STATS)
   .queryParam("uuid", uuid);
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+            String result =
+                    restTemplate.exchange(
+                            builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
@@ -713,13 +790,20 @@ System.out.println(result);
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
-
+        if(access_token==null)
+            access_token=OauthGetToken();
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_MONTH_STATS)
   .queryParam("uuid", uuid);
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(builder.toUriString(), String.class);
+            String result =
+                    restTemplate.exchange(
+                            builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
@@ -732,19 +816,26 @@ System.out.println(result);
     public ResponseEntity<StatOnlineInfo> getStatOnline(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
             return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        if(access_token==null)
+            access_token=OauthGetToken();
+        try { HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_GET)
-                   .queryParam("uuid", uuid);
+                    .queryParam("uuid", uuid);
 
-           RestTemplate restTemplate = new RestTemplate();
-           UserInfo user = restTemplate.getForObject(builder.toUriString(), UserInfo.class);
+            RestTemplate restTemplate = new RestTemplate();
+            UserInfo user = restTemplate.exchange(
+                    builder.toUriString(), HttpMethod.GET, entity, UserInfo.class).getBody();
 
             UriComponentsBuilder builder2 = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_GET_STAT)
-                    .queryParam("vk", user.getVk()).queryParam("uuid", uuid);;
+                    .queryParam("vk", user.getVk()).queryParam("uuid", uuid);
 
             RestTemplate restTemplate2 = new RestTemplate();
-            String result = restTemplate2.getForObject(builder2.toUriString(), String.class);
+            String result = restTemplate2.exchange(
+                    builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
+
 
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {

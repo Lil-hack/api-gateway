@@ -9,6 +9,7 @@
         <module name="gs-spring-boot" />
         <module name="gs-spring-boot (1)" />
         <module name="gs-spring-boot (2)" />
+        <module name="gs-spring-boot (3)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -16,6 +17,7 @@
       <module name="gs-spring-boot" target="1.8" />
       <module name="gs-spring-boot (1)" target="1.8" />
       <module name="gs-spring-boot (2)" target="1.8" />
+      <module name="gs-spring-boot (3)" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -23,6 +25,7 @@
       <module name="gs-spring-boot" options="-parameters" />
       <module name="gs-spring-boot (1)" options="-parameters" />
       <module name="gs-spring-boot (2)" options="-parameters" />
+      <module name="gs-spring-boot (3)" options="-parameters" />
     </option>
   </component>
 </project>
