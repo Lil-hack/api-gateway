@@ -311,7 +311,7 @@ System.out.println(result);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("user.createError", e);
-            return new ResponseEntity("ошибка при создании пользователя.",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -336,7 +336,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("user.getError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -362,7 +362,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("user.getAllError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PostMapping("/user.login")
@@ -389,7 +389,7 @@ System.out.println(result);
             return new ResponseEntity(result,HttpStatus.OK);
         } catch (Exception e) {
             logger.error("user.createError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_USER_LOGIN.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PutMapping("/user.updateUUID")
@@ -422,7 +422,7 @@ System.out.println(result);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("user.updateUuidError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -495,7 +495,7 @@ System.out.println(result);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("user.updateUuidError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @DeleteMapping("/user.delete{uuid}")
@@ -532,7 +532,7 @@ System.out.println(result);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("user.deleteError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     ///////////////////////////////Statistic API///////////////////////////////
@@ -561,7 +561,7 @@ System.out.println(result);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("user.createError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATISTIC.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -590,7 +590,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("statistic.getAllError", e);
-            return new ResponseEntity("lox",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATISTIC.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -617,7 +617,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("statistic.getWeekError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATISTIC.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -643,7 +643,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("statistic.getMonthError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATISTIC.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -675,7 +675,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("statistic.getError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATISTIC.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -704,7 +704,7 @@ System.out.println(result);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("statOnline.createError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATONLINE.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping("/statOnline.getAll")
@@ -730,7 +730,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("statOnline.getAllError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATONLINE.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping("/statOnline.getDay")
@@ -756,7 +756,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("statOnline.getDayError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATONLINE.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -782,7 +782,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("statOnline.getWeekError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATONLINE.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -808,7 +808,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("statOnline.getMonthError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATONLINE.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -840,7 +840,7 @@ System.out.println(result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("statOnline.getError", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATONLINE.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
