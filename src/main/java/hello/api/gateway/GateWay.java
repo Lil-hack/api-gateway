@@ -539,6 +539,9 @@ System.out.println(result);
 
 
         try {
+            if(access_token==null)
+            access_token=OauthGetToken();
+            
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_ALL_STATS)
                     .queryParam("uuid", uuid);
             HttpHeaders headers = new HttpHeaders();
