@@ -546,8 +546,9 @@ System.out.println(result);
             HttpEntity<String> entity = new HttpEntity<>(headers);
 
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(builder.toUriString(), String.class,entity);
-
+            String result =
+            restTemplate.exchange(
+                    builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("statistic.getAllError", e);
