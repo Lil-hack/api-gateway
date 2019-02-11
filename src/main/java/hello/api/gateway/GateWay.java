@@ -318,7 +318,7 @@ System.out.println(result);
     @GetMapping("/user.get{uuid}")
     public ResponseEntity<UserInfo> getUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -343,7 +343,7 @@ System.out.println(result);
     @GetMapping("/user.getAll")
     public ResponseEntity<List<UserInfo>> getUserAll(@RequestHeader(value="Authorization",required = false) String token) {
     if(!OauthCheckToken(token))
-       return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+       return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
 
@@ -395,7 +395,7 @@ System.out.println(result);
     @PutMapping("/user.updateUUID")
     public ResponseEntity updateUuidUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -429,7 +429,7 @@ System.out.println(result);
     @PutMapping("/user.updateVK")
     public ResponseEntity updateVkUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -501,7 +501,7 @@ System.out.println(result);
     @DeleteMapping("/user.delete{uuid}")
     public ResponseEntity deleteUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
     try {
@@ -539,7 +539,7 @@ System.out.println(result);
     @PostMapping("/statistic.create")
     public ResponseEntity createStatistic(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo info) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -570,7 +570,7 @@ System.out.println(result);
         System.out.println("user vce norm");
         System.out.println("user vce norm"+token);
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
 
 
         try {
@@ -597,7 +597,7 @@ System.out.println(result);
     @GetMapping("/statistic.getWeek")
     public ResponseEntity<List<StatisticInfo>> getStatWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -624,7 +624,7 @@ System.out.println(result);
     @GetMapping("/statistic.getMonth")
     public ResponseEntity<List<StatisticInfo>> getStatMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -650,7 +650,7 @@ System.out.println(result);
     @GetMapping("/statistic.get")
     public ResponseEntity<StatisticInfo> getStat(@RequestHeader(value="Authorization",required = false) String token, @RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -683,7 +683,7 @@ System.out.println(result);
     @PostMapping("/statOnline.create")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineCreate(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo info) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -710,7 +710,7 @@ System.out.println(result);
     @GetMapping("/statOnline.getAll")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -736,7 +736,7 @@ System.out.println(result);
     @GetMapping("/statOnline.getDay")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineDay(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -763,7 +763,7 @@ System.out.println(result);
     @GetMapping("/statOnline.getWeek")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -789,7 +789,7 @@ System.out.println(result);
     @GetMapping("/statOnline.getMonth")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try {
@@ -815,7 +815,7 @@ System.out.println(result);
     @GetMapping("/statOnline.get")
     public ResponseEntity<StatOnlineInfo> getStatOnline(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!OauthCheckToken(token))
-            return   new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
         try { HttpHeaders headers = new HttpHeaders();
