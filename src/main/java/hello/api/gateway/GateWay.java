@@ -528,23 +528,16 @@ System.out.println(result);
                     HttpMethod.PUT, requestUserInfoEntity, new ParameterizedTypeReference<UserInfo>() {
                     });
 
-            UriComponentsBuilder builder2 = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_DELETE)
-                    .queryParam("uuid", requestUserDetails.getUid());
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization","Bearer "+access_token);
-            HttpEntity<String> entity = new HttpEntity<>(headers);
-
-            RestTemplate restTemplate2 = new RestTemplate();
-
-            restTemplate2.exchange(
-                            builder2.toUriString(), HttpMethod.DELETE, entity, String.class);
-
+        } catch (Exception e) {
+            logger.error("user.updateUuidError", e);
+            return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        try {
             UriComponentsBuilder builder3 = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_DELETE)
                     .queryParam("uuid", requestUserDetails.getUid());
             HttpHeaders headers2 = new HttpHeaders();
-            headers2.set("Authorization","Bearer "+access_token);
-            HttpEntity<String> entity2 = new HttpEntity<>(headers);
+            headers2.set("Authorization", "Bearer " + access_token);
+            HttpEntity<String> entity2 = new HttpEntity<>(headers2);
 
             RestTemplate restTemplate3 = new RestTemplate();
 
@@ -552,20 +545,34 @@ System.out.println(result);
                     builder3.toUriString(), HttpMethod.DELETE, entity2, String.class);
 
 
+            UriComponentsBuilder builder2 = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_DELETE)
+                    .queryParam("uuid", requestUserDetails.getUid());
+
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
+            RestTemplate restTemplate2 = new RestTemplate();
+
+            restTemplate2.exchange(
+                    builder2.toUriString(), HttpMethod.DELETE, entity, String.class);
+
+
             ObjectWriter ow2 = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            UserInfo usermmy=new UserInfo();
+            UserInfo usermmy = new UserInfo();
             usermmy.setUid(requestUserDetails.getUid());
             usermmy.setVk(requestUserDetails.getVk());
-            String requestJson2 =  ow2.writeValueAsString(usermmy);
+            String requestJson2 = ow2.writeValueAsString(usermmy);
 
             RestTemplate restTemplate4 = new RestTemplate();
 
             String url2 = URL_API_STATISTIC_CREATE_STAT;
             HttpHeaders headers3 = new HttpHeaders();
             headers3.setContentType(MediaType.APPLICATION_JSON);
-            headers3.set("Authorization","Bearer "+access_token);
+            headers3.set("Authorization", "Bearer " + access_token);
 
-            HttpEntity<String> entity3 = new HttpEntity<String>(requestJson2,headers2);
+            HttpEntity<String> entity3 = new HttpEntity<String>(requestJson2, headers2);
             restTemplate4.postForObject(url2, entity3, String.class);
 
             RestTemplate restTemplate5 = new RestTemplate();
@@ -573,16 +580,25 @@ System.out.println(result);
             String url3 = URL_API_STATONLINE_CREATE_STAT;
             HttpHeaders headers4 = new HttpHeaders();
             headers4.setContentType(MediaType.APPLICATION_JSON);
-            headers4.set("Authorization","Bearer "+access_token);
-            HttpEntity<String> entity4 = new HttpEntity<String>(requestJson2,headers3);
+            headers4.set("Authorization", "Bearer " + access_token);
+            HttpEntity<String> entity4 = new HttpEntity<String>(requestJson2, headers3);
             restTemplate5.postForObject(url3, entity4, String.class);
             System.out.println(" vce norm end");
-
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("user.updateUuidError", e);
-            return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders userInfohead = new HttpHeaders();
+            userInfohead.setContentType(MediaType.APPLICATION_JSON);
+            userInfohead.set("Authorization","Bearer "+access_token);
+            requestUserDetails.setVk("basta");
+            HttpEntity<UserInfo> requestUserInfoEntity = new HttpEntity<>(requestUserDetails, userInfohead);
+            restTemplate.exchange(URL_API_USERS_UPDATE_VK,
+                    HttpMethod.PUT, requestUserInfoEntity, new ParameterizedTypeReference<UserInfo>() {
+                    });
+            return new ResponseEntity(ErrorCodes.ERROR_503_STATISTIC.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+
     }
     @DeleteMapping("/user.delete{uuid}")
     public ResponseEntity deleteUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {

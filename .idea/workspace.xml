@@ -23,8 +23,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="102" column="48" lean-forward="true" selection-start-line="102" selection-start-column="48" selection-end-line="102" selection-end-column="48" />
+            <state relative-caret-position="562">
+              <caret line="557" column="35" lean-forward="true" selection-start-line="557" selection-start-column="35" selection-end-line="557" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4607#5858#0" />
@@ -39,7 +39,6 @@
                 <element signature="e#15697#16839#0" />
                 <element signature="e#16844#18078#0" />
                 <element signature="e#18083#19937#0" />
-                <element signature="e#19943#23550#0" />
                 <element signature="e#25348#26744#0" />
               </folding>
             </state>
@@ -438,7 +437,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="A&#9;PSI&#9;JAVA://hello.Application" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549934491656" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549935959946" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../api-users/pom.xml" />
@@ -1309,8 +1308,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="102" column="48" lean-forward="true" selection-start-line="102" selection-start-column="48" selection-end-line="102" selection-end-column="48" />
+        <state relative-caret-position="562">
+          <caret line="557" column="35" lean-forward="true" selection-start-line="557" selection-start-column="35" selection-end-line="557" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4607#5858#0" />
@@ -1325,7 +1324,6 @@
             <element signature="e#15697#16839#0" />
             <element signature="e#16844#18078#0" />
             <element signature="e#18083#19937#0" />
-            <element signature="e#19943#23550#0" />
             <element signature="e#25348#26744#0" />
           </folding>
         </state>
