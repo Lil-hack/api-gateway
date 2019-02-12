@@ -111,9 +111,11 @@ public class GateWay {
             HttpEntity<String> entity = new HttpEntity<>(headers);
 
             requestErrorList.forEach(requst->     { System.out.println("repeatRequest:"+requst);
+                        requestRepos.delete(requst);
                         switch(requst.getUrl()) {
                             case URL_API_USERS+"delete":
                                 try {
+
                                     UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_DELETE)
                                             .queryParam("uuid", requst.getUuid());
 
@@ -601,7 +603,7 @@ System.out.println(result);
                 builder.toUriString(), HttpMethod.DELETE, entity, String.class);
         } catch (Exception e) {
             RequestError requestError=new RequestError();
-            requestError.setUuid(uuid);
+            requestError.setUuid(uuid.toString());
             requestError.setUrl(URL_API_USERS_DELETE);
             requestRepos.save(requestError);
         }
@@ -615,7 +617,7 @@ System.out.println(result);
         }
         catch (Exception e) {
             RequestError requestError=new RequestError();
-            requestError.setUuid(uuid);
+            requestError.setUuid(uuid.toString());
             requestError.setUrl(URL_API_STATONLINE_DELETE);
             requestRepos.save(requestError);  }
         try {
@@ -628,7 +630,7 @@ System.out.println(result);
         }
         catch (Exception e) {
             RequestError requestError=new RequestError();
-            requestError.setUuid(uuid);
+            requestError.setUuid(uuid.toString());
             requestError.setUrl(URL_API_STATISTIC_DELETE);
             requestRepos.save(requestError);
         }

@@ -11,14 +11,14 @@ public class RequestError implements Serializable {
 
 
     private String id;
-    private UUID uuid;
+    private String uuid;
     private String url;
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
