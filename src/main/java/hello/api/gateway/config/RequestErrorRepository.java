@@ -4,4 +4,4 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StudentRepository extends CrudRepository<Student, String> {}
+public interface RequestErrorRepository extends CrudRepository<RequestError, String> {}

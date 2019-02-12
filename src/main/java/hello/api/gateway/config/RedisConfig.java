@@ -29,8 +29,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("ec2-54-76-190-220.eu-west-1.compute.amazonaws.com", 14819);
-        redisStandaloneConfiguration.setPassword(RedisPassword.of("ped6432db14eaae02ecf72943da11638c29c504fc188952f45ba217f604285720"));
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("ec2-54-76-190-220.eu-west-1.compute.amazonaws.com", 16729);
+        redisStandaloneConfiguration.setPassword(RedisPassword.of("pf1c698a8632cba8b6c2845916e9988d2f47567b21ba9a85cd1d7f127a7d6f8f7"));
         return new JedisConnectionFactory(redisStandaloneConfiguration);
     }
 

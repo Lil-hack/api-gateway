@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import hello.api.gateway.config.RequestError;
+import hello.api.gateway.config.RequestErrorRepository;
 import hello.api.gateway.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,8 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +39,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.*;
 
-
+@EnableScheduling
 @RestController
 @CrossOrigin
 @RequestMapping("/api-gateway")
@@ -89,7 +93,79 @@ public class GateWay {
     private String access_token;
     ////////////////////////////////OAUTH API////////////////////////////////////
 
+    @Autowired
+    private RequestErrorRepository requestRepos;
 
+    @Scheduled(cron = "*/60 * * * * *")
+    public void repeatRequest() {
+
+            access_token=OauthGetToken();
+            System.out.println("repeatRequest");
+            List<RequestError> requestErrorList = new ArrayList<>();
+            requestRepos.findAll().forEach(requestErrorList::add);
+            if(requestErrorList.size()==0)
+                return;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization","Bearer "+access_token);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
+            requestErrorList.forEach(requst->     { System.out.println("repeatRequest:"+requst);
+                        switch(requst.getUrl()) {
+                            case URL_API_USERS+"delete":
+                                try {
+                                    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_DELETE)
+                                            .queryParam("uuid", requst.getUuid());
+
+                                    RestTemplate restTemplate = new RestTemplate();
+                                    restTemplate.exchange(
+                                            builder.toUriString(), HttpMethod.DELETE, entity, String.class);
+                                    requestRepos.delete(requst);
+                                }
+                                catch (Exception e)
+                                {
+                                    logger.error("repeatRequest", e);
+                                }
+                                break;
+                            case URL_API_STATISTIC+"delete":
+                                try {
+                                    UriComponentsBuilder builder2 = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_DELETE)
+                                            .queryParam("uuid", requst.getUuid());
+
+                                    RestTemplate restTemplate2 = new RestTemplate();
+                                    restTemplate2.exchange(
+                                            builder2.toUriString(), HttpMethod.DELETE, entity, String.class);
+                                    requestRepos.delete(requst);
+                                }  catch (Exception e)
+                            {
+                                logger.error("repeatRequest", e);
+                            }
+                                break;
+                            case URL_API_STATONLINE+"delete":
+                                try {
+                                UriComponentsBuilder builder3 = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_DELETE)
+                                        .queryParam("uuid", requst.getUuid());
+
+                                RestTemplate restTemplate3 = new RestTemplate();
+                                restTemplate3.exchange(
+                                        builder3.toUriString(), HttpMethod.DELETE, entity, String.class);
+                                    requestRepos.delete(requst);
+                        }  catch (Exception e)
+                            {
+                                logger.error("repeatRequest", e);
+                            }
+                                break;
+
+                        }
+                    System.out.println(requst.getUrl());
+        }
+
+            );
+
+
+
+
+    }
         private boolean OauthCheckToken(String token)
 {
 
@@ -512,36 +588,52 @@ System.out.println(result);
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(access_token==null)
             access_token=OauthGetToken();
-    try {
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization","Bearer "+access_token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
+        try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_DELETE)
                     .queryParam("uuid", uuid);
 
             RestTemplate restTemplate = new RestTemplate();
         restTemplate.exchange(
                 builder.toUriString(), HttpMethod.DELETE, entity, String.class);
-
+        } catch (Exception e) {
+            RequestError requestError=new RequestError();
+            requestError.setUuid(uuid);
+            requestError.setUrl(URL_API_USERS_DELETE);
+            requestRepos.save(requestError);
+        }
+        try {
             UriComponentsBuilder builder2 = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_DELETE)
                     .queryParam("uuid", uuid);
 
             RestTemplate restTemplate2 = new RestTemplate();
         restTemplate2.exchange(
-                builder2.toUriString(), HttpMethod.DELETE, entity, String.class);;
-
+                builder2.toUriString(), HttpMethod.DELETE, entity, String.class);
+        }
+        catch (Exception e) {
+            RequestError requestError=new RequestError();
+            requestError.setUuid(uuid);
+            requestError.setUrl(URL_API_STATONLINE_DELETE);
+            requestRepos.save(requestError);  }
+        try {
             UriComponentsBuilder builder3 = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_DELETE)
                     .queryParam("uuid", uuid);
 
             RestTemplate restTemplate3 = new RestTemplate();
-        restTemplate3.exchange(
-                builder3.toUriString(), HttpMethod.DELETE, entity, String.class);
-
-            return new ResponseEntity(HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("user.deleteError", e);
-            return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
+            restTemplate3.exchange(
+                    builder3.toUriString(), HttpMethod.DELETE, entity, String.class);
         }
+        catch (Exception e) {
+            RequestError requestError=new RequestError();
+            requestError.setUuid(uuid);
+            requestError.setUrl(URL_API_STATISTIC_DELETE);
+            requestRepos.save(requestError);
+        }
+            return new ResponseEntity(HttpStatus.OK);
+
     }
     ///////////////////////////////Statistic API///////////////////////////////
     @PostMapping("/statistic.create")
