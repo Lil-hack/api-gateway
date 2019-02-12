@@ -111,7 +111,7 @@ public class GateWay {
             HttpEntity<String> entity = new HttpEntity<>(headers);
 
             requestErrorList.forEach(requst->     { System.out.println("repeatRequest:"+requst);
-                        requestRepos.delete(requst);
+
                         switch(requst.getUrl()) {
                             case URL_API_USERS+"delete":
                                 try {
