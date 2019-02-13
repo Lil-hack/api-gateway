@@ -100,17 +100,18 @@ public class GateWay {
     public void repeatRequest() {
 
             access_token=OauthGetToken();
-            System.out.println("repeatRequest");
+            System.out.println("Таймер и редис работает");
             List<RequestError> requestErrorList = new ArrayList<>();
             requestRepos.findAll().forEach(requestErrorList::add);
-            if(requestErrorList.size()==0)
+            if(requestErrorList.size()==0) {
+                System.out.println(" Буфер пустой");
                 return;
-
+            }
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization","Bearer "+access_token);
             HttpEntity<String> entity = new HttpEntity<>(headers);
 
-            requestErrorList.forEach(requst->     { System.out.println("repeatRequest:"+requst);
+            requestErrorList.forEach(requst->     { System.out.println("Запрос с ошибкой для повтора транзакции:"+requst);
 
                         switch(requst.getUrl()) {
                             case URL_API_USERS+"delete":
