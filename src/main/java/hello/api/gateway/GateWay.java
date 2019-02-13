@@ -96,7 +96,7 @@ public class GateWay {
     @Autowired
     private RequestErrorRepository requestRepos;
 
-    @Scheduled(cron = "*/60 * * * * *")
+    @Scheduled(cron = "*/30 * * * * *")
     public void repeatRequest() {
 
             access_token=OauthGetToken();
