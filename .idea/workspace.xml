@@ -20,25 +20,76 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
-              <caret line="95" column="14" lean-forward="true" selection-start-line="95" selection-start-column="14" selection-end-line="95" selection-end-column="14" />
+            <state relative-caret-position="495">
+              <caret line="96" column="2" selection-start-line="96" selection-start-column="2" selection-end-line="97" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4607#5858#0" />
-                <element signature="e#5864#6891#0" />
-                <element signature="e#6897#8422#0" />
-                <element signature="e#8428#9346#0" />
-                <element signature="e#9351#10084#0" />
-                <element signature="e#9948#10078#0" />
-                <element signature="e#10090#11712#0" />
-                <element signature="e#14481#15691#0" />
-                <element signature="e#15697#16839#0" />
-                <element signature="e#16844#18078#0" />
-                <element signature="e#18083#19937#0" />
-                <element signature="e#25348#26744#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/StatOnlineController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-708">
+              <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2539#2547#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/StatisticController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="363">
+              <caret line="29" column="4" lean-forward="true" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2752#2760#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/OauthController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="791">
+              <caret line="118" column="34" lean-forward="true" selection-start-line="118" selection-start-column="34" selection-end-line="118" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#OauthCheckToken#0;class#OauthController#0" />
+                <element signature="method#OauthGetToken#0;class#OauthController#0" />
+                <element signature="e#2312#2328#0" expanded="true" />
+                <element signature="e#2583#2614#0" expanded="true" />
+                <element signature="e#6732#6748#0" expanded="true" />
+                <element signature="e#7355#7386#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/UserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="31" column="59" lean-forward="true" selection-start-line="31" selection-start-column="59" selection-end-line="31" selection-end-column="59" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2622#2630#0" expanded="true" />
+                <element signature="e#3480#3488#0" expanded="true" />
+                <element signature="e#4054#4062#0" expanded="true" />
+                <element signature="e#7768#7776#0" expanded="true" />
+                <element signature="e#9122#9138#0" expanded="true" />
+                <element signature="e#13035#13043#0" expanded="true" />
+                <element signature="e#13509#13517#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -59,8 +110,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/config/RedisConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+            <state relative-caret-position="289">
+              <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,31 +144,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="482">
+              <caret line="93" column="35" lean-forward="true" selection-start-line="93" selection-start-column="35" selection-end-line="93" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/config/RequestErrorRepository.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
-              <caret line="6" column="75" selection-start-line="6" selection-start-column="75" selection-end-line="6" selection-end-column="75" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../api-statistic/src/main/java/hello/api/statistic/web/StatisticController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="32" column="103" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="103" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../api-statistic/src/main/java/hello/api/statistic/service/StatisticServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="31" selection-end-column="42" />
+              <caret line="6" column="38" lean-forward="true" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -146,8 +185,11 @@
       <find>URL_API_STATISTIC_CREATE_STAT</find>
       <find>URL_API_STATONLINE</find>
       <find>UAER</find>
-      <find>OauthCheckToken</find>
       <find>ACCESS_TOKEN_VALIDATE_URI</find>
+      <find>dele</find>
+      <find>OauthCheckToken</find>
+      <find>OauthGetToken</find>
+      <find>access_token</find>
     </findStrings>
     <replaceStrings>
       <replace>userRepos</replace>
@@ -157,6 +199,9 @@
       <replace>USER</replace>
       <replace>URL_API_STATONLINE</replace>
       <replace>new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED)</replace>
+      <replace>oauth.OauthCheckToken</replace>
+      <replace>oauth.OauthGetToken</replace>
+      <replace>oauth.access_token</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -165,10 +210,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/hello/api/users/model/UserInfo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/hello/api/users/entity/User.java" />
-        <option value="$PROJECT_DIR$/src/main/java/hello/api/statonline/service/StatOnlineServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/hello/api/statonline/service/StatOnlineService.java" />
         <option value="$PROJECT_DIR$/src/main/java/hello/api/statonline/repository/StatOnlineRepos.java" />
         <option value="$PROJECT_DIR$/src/main/java/hello/api/statistic/service/StatisticServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/hello/api/statistic/service/StatisticService.java" />
@@ -215,7 +256,11 @@
         <option value="$PROJECT_DIR$/src/main/java/hello/Application.java" />
         <option value="$PROJECT_DIR$/src/main/java/hello/api/gateway/config/RedisConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/hello/api/gateway/config/RequestError.java" />
+        <option value="$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/StatisticController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/OauthController.java" />
         <option value="$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java" />
+        <option value="$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/StatOnlineController.java" />
       </list>
     </option>
   </component>
@@ -243,10 +288,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="697" />
-    <option name="y" value="438" />
-    <option name="width" value="1920" />
-    <option name="height" value="1140" />
+    <option name="x" value="465" />
+    <option name="y" value="292" />
+    <option name="width" value="1280" />
+    <option name="height" value="760" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -306,7 +351,7 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="hello" type="462c0819:PsiDirectoryNode" />
               <item name="gateway" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="gs-spring-boot" type="b2602c69:ProjectViewProjectNode" />
@@ -367,7 +412,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="A&#9;PSI&#9;JAVA://hello.Application" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550062000477" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550149679084" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../api-users/pom.xml" />
@@ -628,10 +673,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="775" extended-state="6" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49514562" visible="true" weight="0.28987855" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49514562" visible="true" weight="0.21882641" />
       <window_info id="Structure" order="1" sideWeight="0.50676984" side_tool="true" weight="0.2769231" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -677,10 +722,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/hello/api/statistic/web/StatisticControllerTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/hello/api/users/web/UsersControllerTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/hello/HelloControllerTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/statistic/web/StatisticController.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/statistic/service/StatisticServiceImpl.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/hello/scheduler/ScheduledTasks.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/users/web/UsersController.java" />
@@ -1129,13 +1170,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="727">
-          <caret line="90" column="59" selection-start-line="90" selection-start-column="59" selection-end-line="90" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../api-statistic/src/main/java/hello/api/statistic/service/StatisticService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -1184,10 +1218,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="93" column="35" lean-forward="true" selection-start-line="93" selection-start-column="35" selection-end-line="93" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/config/RequestErrorRepository.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
-          <caret line="6" column="75" selection-start-line="6" selection-start-column="75" selection-end-line="6" selection-end-column="75" />
+          <caret line="6" column="38" lean-forward="true" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1196,8 +1237,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/config/RedisConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+        <state relative-caret-position="289">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1236,24 +1277,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/StatisticController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="95" column="14" lean-forward="true" selection-start-line="95" selection-start-column="14" selection-end-line="95" selection-end-column="14" />
+        <state relative-caret-position="363">
+          <caret line="29" column="4" lean-forward="true" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4607#5858#0" />
-            <element signature="e#5864#6891#0" />
-            <element signature="e#6897#8422#0" />
-            <element signature="e#8428#9346#0" />
-            <element signature="e#9351#10084#0" />
-            <element signature="e#9948#10078#0" />
-            <element signature="e#10090#11712#0" />
-            <element signature="e#14481#15691#0" />
-            <element signature="e#15697#16839#0" />
-            <element signature="e#16844#18078#0" />
-            <element signature="e#18083#19937#0" />
-            <element signature="e#25348#26744#0" />
+            <element signature="e#2752#2760#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/OauthController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="791">
+          <caret line="118" column="34" lean-forward="true" selection-start-line="118" selection-start-column="34" selection-end-line="118" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#OauthCheckToken#0;class#OauthController#0" />
+            <element signature="method#OauthGetToken#0;class#OauthController#0" />
+            <element signature="e#2312#2328#0" expanded="true" />
+            <element signature="e#2583#2614#0" expanded="true" />
+            <element signature="e#6732#6748#0" expanded="true" />
+            <element signature="e#7355#7386#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/GateWay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="96" column="2" selection-start-line="96" selection-start-column="2" selection-end-line="97" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="31" column="59" lean-forward="true" selection-start-line="31" selection-start-column="59" selection-end-line="31" selection-end-column="59" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2622#2630#0" expanded="true" />
+            <element signature="e#3480#3488#0" expanded="true" />
+            <element signature="e#4054#4062#0" expanded="true" />
+            <element signature="e#7768#7776#0" expanded="true" />
+            <element signature="e#9122#9138#0" expanded="true" />
+            <element signature="e#13035#13043#0" expanded="true" />
+            <element signature="e#13509#13517#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/hello/api/gateway/Controllers/StatOnlineController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-708">
+          <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2539#2547#0" expanded="true" />
           </folding>
         </state>
       </provider>
