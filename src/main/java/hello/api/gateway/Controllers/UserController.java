@@ -139,6 +139,7 @@ public class UserController {
             return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PostMapping("/user.login")
     public ResponseEntity<UserInfo> loginUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
 
@@ -166,6 +167,7 @@ public class UserController {
             return new ResponseEntity(ErrorCodes.ERROR_503_USER_LOGIN.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PutMapping("/user.updateUUID")
     public ResponseEntity updateUuidUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
         if(!oauth.OauthCheckToken(token))
@@ -288,6 +290,7 @@ public class UserController {
 
 
     }
+
     @DeleteMapping("/user.delete{uuid}")
     public ResponseEntity deleteUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!oauth.OauthCheckToken(token))

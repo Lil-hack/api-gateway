@@ -35,8 +35,6 @@ public class OauthController {
     static final String CLIENT_SECRET="3997673d7814bbbcde139fe181e7fba723beb70a4e6e49363230ff78051f40d1";
     public String access_token;
 
-    @Autowired
-    private OauthController oauth;
 
     public boolean OauthCheckToken(String token)
     {

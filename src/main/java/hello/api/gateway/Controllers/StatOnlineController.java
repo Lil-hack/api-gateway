@@ -22,6 +22,7 @@ public class StatOnlineController {
 
     @Autowired
     private OauthController oauth;
+
     @PostMapping("/statOnline.create")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineCreate(@RequestHeader(value="Authorization",required = false) String token, @RequestBody UserInfo info) {
         if(!oauth.OauthCheckToken(token))
@@ -49,6 +50,7 @@ public class StatOnlineController {
             return new ResponseEntity(ErrorCodes.ERROR_503_STATONLINE.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/statOnline.getAll")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!oauth.OauthCheckToken(token))
@@ -75,6 +77,7 @@ public class StatOnlineController {
             return new ResponseEntity(ErrorCodes.ERROR_503_STATONLINE.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/statOnline.getDay")
     public ResponseEntity<List<StatOnlineInfo>> getStatOnlineDay(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!oauth.OauthCheckToken(token))
