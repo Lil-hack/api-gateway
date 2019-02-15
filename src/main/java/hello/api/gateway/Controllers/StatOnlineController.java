@@ -159,6 +159,7 @@ public class StatOnlineController {
 
     @GetMapping("/statAll.get")
     public ResponseEntity getStatOnline(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid,@RequestParam String vk) {
+        System.out.println("token"+token);
         if(oauth.OauthCheckToken(token)==false)
         {
             return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);

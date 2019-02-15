@@ -39,8 +39,9 @@ public class OauthController {
     public boolean OauthCheckToken(String token)
     {
 
-        if(token==null)
+        if(token==null) {
             return false;
+        }
         else {
             try {
                 String token2 = token.replace("Bearer ", "");
