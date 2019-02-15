@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -158,10 +159,12 @@ public class StatOnlineController {
 
     @GetMapping("/statAll.get")
     public ResponseEntity getStatOnline(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid,@RequestParam String vk) {
-        if(!oauth.OauthCheckToken(token))
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false)
+        {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + oauth.access_token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -193,9 +196,11 @@ public class StatOnlineController {
             statAll.setPages(statisticInfo.getPages());
 
 
-        }catch (Exception e) {
-            statAll.setPhotoUrl(null);
+        } catch (HttpServerErrorException e) {
 
+            if (e.getStatusCode() == HttpStatus.FORBIDDEN) {
+                oauth.access_token = oauth.OauthGetToken();
+            }
         }
 
         try {
