@@ -44,7 +44,6 @@ import java.util.*;
 @EnableScheduling
 @RestController
 @CrossOrigin
-@RequestMapping("/api-gateway")
 public class GateWay {
     
     private static final Logger logger = LoggerFactory.getLogger(GateWay.class);

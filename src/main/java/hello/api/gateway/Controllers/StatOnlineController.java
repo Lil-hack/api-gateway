@@ -17,6 +17,9 @@ import java.util.UUID;
 
 import static hello.api.gateway.GateWay.*;
 
+@RestController
+@CrossOrigin
+@RequestMapping("/api-gateway")
 public class StatOnlineController {
     private static final Logger logger = LoggerFactory.getLogger(StatOnlineController.class);
 
