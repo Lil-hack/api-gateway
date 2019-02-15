@@ -65,7 +65,7 @@ public class StatisticController {
         System.out.println("user vce norm"+token);
 
 
-        if(!oauth.OauthCheckToken(token))
+        if(oauth.OauthCheckToken(token)==false)
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
 
 

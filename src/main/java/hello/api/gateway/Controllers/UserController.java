@@ -92,7 +92,7 @@ public class UserController {
 
     @GetMapping("/user.get{uuid}")
     public ResponseEntity getUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
-        if(!oauth.OauthCheckToken(token))
+        if(oauth.OauthCheckToken(token)==false)
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
             oauth.access_token=oauth.OauthGetToken();
@@ -117,7 +117,7 @@ public class UserController {
 
     @GetMapping("/user.getAll")
     public ResponseEntity getUserAll(@RequestHeader(value="Authorization",required = false) String token) {
-        if(!oauth.OauthCheckToken(token)) {
+        if(oauth.OauthCheckToken(token)==false) {
             return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
         }
 
@@ -170,7 +170,7 @@ public class UserController {
 
     @PutMapping("/user.updateUUID")
     public ResponseEntity updateUuidUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
-        if(!oauth.OauthCheckToken(token))
+        if(oauth.OauthCheckToken(token)==false)
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
             oauth.access_token=oauth.OauthGetToken();
@@ -204,7 +204,7 @@ public class UserController {
 
     @PutMapping("/user.updateVK")
     public ResponseEntity updateVkUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
-        if(!oauth.OauthCheckToken(token))
+        if(oauth.OauthCheckToken(token)==false)
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
             oauth.access_token=oauth.OauthGetToken();
@@ -293,7 +293,7 @@ public class UserController {
 
     @DeleteMapping("/user.delete{uuid}")
     public ResponseEntity deleteUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
-        if(!oauth.OauthCheckToken(token))
+        if(oauth.OauthCheckToken(token)==false)
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
             oauth.access_token=oauth.OauthGetToken();
