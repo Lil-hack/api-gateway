@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -90,7 +91,7 @@ public class UserController {
     }
 
     @GetMapping("/user.get{uuid}")
-    public ResponseEntity<UserInfo> getUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+    public ResponseEntity getUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!oauth.OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
@@ -108,18 +109,17 @@ public class UserController {
                     restTemplate.exchange(
                             builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
             return new ResponseEntity(result, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (HttpServerErrorException e) {
             logger.error("user.getError", e);
             return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/user.getAll")
-    public ResponseEntity<List<UserInfo>> getUserAll(@RequestHeader(value="Authorization",required = false) String token) {
-        if(!oauth.OauthCheckToken(token))
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+    public ResponseEntity getUserAll(@RequestHeader(value="Authorization",required = false) String token) {
+        if(!oauth.OauthCheckToken(token)) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
 
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_ALL);
@@ -134,14 +134,14 @@ public class UserController {
                             builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 
             return new ResponseEntity(result, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (HttpServerErrorException e) {
             logger.error("user.getAllError", e);
             return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/user.login")
-    public ResponseEntity<UserInfo> loginUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
+    public ResponseEntity loginUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
 
         try {
             if(oauth.access_token==null)
@@ -196,7 +196,7 @@ public class UserController {
                     });
 
             return new ResponseEntity(HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (HttpServerErrorException e) {
             logger.error("user.updateUuidError", e);
             return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -218,7 +218,7 @@ public class UserController {
                     HttpMethod.PUT, requestUserInfoEntity, new ParameterizedTypeReference<UserInfo>() {
                     });
 
-        } catch (Exception e) {
+        } catch (HttpServerErrorException e) {
             logger.error("user.updateUuidError", e);
             return new ResponseEntity(ErrorCodes.ERROR_503_USER.error(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -308,7 +308,7 @@ public class UserController {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.exchange(
                     builder.toUriString(), HttpMethod.DELETE, entity, String.class);
-        } catch (Exception e) {
+        } catch (HttpServerErrorException e) {
             RequestError requestError=new RequestError();
             requestError.setUuid(uuid.toString());
             requestError.setUrl(URL_API_USERS_DELETE);
@@ -322,7 +322,7 @@ public class UserController {
             restTemplate2.exchange(
                     builder2.toUriString(), HttpMethod.DELETE, entity, String.class);
         }
-        catch (Exception e) {
+        catch (HttpServerErrorException e) {
             RequestError requestError=new RequestError();
             requestError.setUuid(uuid.toString());
             requestError.setUrl(URL_API_STATONLINE_DELETE);
@@ -335,7 +335,7 @@ public class UserController {
             restTemplate3.exchange(
                     builder3.toUriString(), HttpMethod.DELETE, entity, String.class);
         }
-        catch (Exception e) {
+        catch (HttpServerErrorException e) {
             RequestError requestError=new RequestError();
             requestError.setUuid(uuid.toString());
             requestError.setUrl(URL_API_STATISTIC_DELETE);

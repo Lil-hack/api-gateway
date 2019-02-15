@@ -2,7 +2,6 @@ package hello.api.gateway.Controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import hello.api.gateway.GateWay;
 import hello.api.gateway.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
+
 import java.util.UUID;
 
 import static hello.api.gateway.GateWay.*;
@@ -24,7 +23,7 @@ public class StatOnlineController {
     private OauthController oauth;
 
     @PostMapping("/statOnline.create")
-    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineCreate(@RequestHeader(value="Authorization",required = false) String token, @RequestBody UserInfo info) {
+    public ResponseEntity getStatOnlineCreate(@RequestHeader(value="Authorization",required = false) String token, @RequestBody UserInfo info) {
         if(!oauth.OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
@@ -52,7 +51,7 @@ public class StatOnlineController {
     }
 
     @GetMapping("/statOnline.getAll")
-    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+    public ResponseEntity getStatOnlineAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!oauth.OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
@@ -79,7 +78,7 @@ public class StatOnlineController {
     }
 
     @GetMapping("/statOnline.getDay")
-    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineDay(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+    public ResponseEntity getStatOnlineDay(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!oauth.OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
@@ -106,7 +105,7 @@ public class StatOnlineController {
     }
 
     @GetMapping("/statOnline.getWeek")
-    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+    public ResponseEntity getStatOnlineWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!oauth.OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
@@ -132,7 +131,7 @@ public class StatOnlineController {
     }
 
     @GetMapping("/statOnline.getMonth")
-    public ResponseEntity<List<StatOnlineInfo>> getStatOnlineMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+    public ResponseEntity getStatOnlineMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!oauth.OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
@@ -158,7 +157,7 @@ public class StatOnlineController {
     }
 
     @GetMapping("/statAll.get")
-    public ResponseEntity<StatOnlineInfo> getStatOnline(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid,@RequestParam String vk) {
+    public ResponseEntity getStatOnline(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid,@RequestParam String vk) {
         if(!oauth.OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)

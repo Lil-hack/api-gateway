@@ -60,7 +60,7 @@ public class StatisticController {
     }
 
     @GetMapping("/statistic.getAll")
-    public ResponseEntity<List<StatisticInfo>> getStatAll(@RequestHeader(value="Authorization",required = false) String token, @RequestParam UUID uuid) {
+    public ResponseEntity getStatAll(@RequestHeader(value="Authorization",required = false) String token, @RequestParam UUID uuid) {
         System.out.println("user vce norm");
         System.out.println("user vce norm"+token);
 
@@ -91,7 +91,7 @@ public class StatisticController {
     }
 
     @GetMapping("/statistic.getWeek")
-    public ResponseEntity<List<StatisticInfo>> getStatWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+    public ResponseEntity getStatWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!oauth.OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
@@ -118,7 +118,7 @@ public class StatisticController {
     }
 
     @GetMapping("/statistic.getMonth")
-    public ResponseEntity<List<StatisticInfo>> getStatMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
+    public ResponseEntity getStatMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
         if(!oauth.OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)
@@ -144,7 +144,7 @@ public class StatisticController {
     }
 
     @GetMapping("/statistic.get")
-    public ResponseEntity<StatisticInfo> getStat(@RequestHeader(value="Authorization",required = false) String token, @RequestParam UUID uuid) {
+    public ResponseEntity getStat(@RequestHeader(value="Authorization",required = false) String token, @RequestParam UUID uuid) {
         if(!oauth.OauthCheckToken(token))
             return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
         if(oauth.access_token==null)

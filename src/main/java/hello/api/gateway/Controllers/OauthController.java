@@ -129,15 +129,6 @@ public class OauthController {
             String response= restTemplate.postForObject(url, entity, String.class);
             System.out.println("user vce norm"+response);
 
-            //put method
-
-//            RestTemplate restTemplate2 = new RestTemplate();
-//
-//            HttpHeaders headers2 = new HttpHeaders();
-//            headers.setContentType(MediaType.APPLICATION_JSON);
-//            HttpEntity<String> requestEntity2 = new HttpEntity<String>("{\"status\":\"1\"}", headers2);
-//            restTemplate2.exchange(url, HttpMethod.PUT, requestEntity2, String.class);
-
             return new ResponseEntity(response, HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("user.createError", e);
