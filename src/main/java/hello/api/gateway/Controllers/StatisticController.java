@@ -32,10 +32,12 @@ public class StatisticController {
     
     @PostMapping("/statistic.create")
     public ResponseEntity createStatistic(@RequestHeader(value="Authorization",required = false) String token, @RequestBody UserInfo info) {
-        if(!oauth.OauthCheckToken(token))
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -65,13 +67,15 @@ public class StatisticController {
         System.out.println("user vce norm"+token);
 
 
-        if(oauth.OauthCheckToken(token)==false)
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
 
         try {
-            if(oauth.access_token==null)
-                oauth.access_token=oauth.OauthGetToken();
+            if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
+
 
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_ALL_STATS)
                     .queryParam("uuid", uuid);
@@ -92,10 +96,12 @@ public class StatisticController {
 
     @GetMapping("/statistic.getWeek")
     public ResponseEntity getStatWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
-        if(!oauth.OauthCheckToken(token))
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_WEEK_STATS)
                     .queryParam("uuid", uuid);
@@ -119,10 +125,12 @@ public class StatisticController {
 
     @GetMapping("/statistic.getMonth")
     public ResponseEntity getStatMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
-        if(!oauth.OauthCheckToken(token))
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATISTIC_FIND_MONTH_STATS)
                     .queryParam("uuid", uuid);
@@ -145,10 +153,12 @@ public class StatisticController {
 
     @GetMapping("/statistic.get")
     public ResponseEntity getStat(@RequestHeader(value="Authorization",required = false) String token, @RequestParam UUID uuid) {
-        if(!oauth.OauthCheckToken(token))
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization","Bearer "+oauth.access_token);

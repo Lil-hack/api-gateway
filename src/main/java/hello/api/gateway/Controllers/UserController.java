@@ -41,8 +41,9 @@ public class UserController {
     @PostMapping("/user.create")
     public ResponseEntity registrationUser(@RequestHeader(value="Authorization",required = false) String token, @RequestBody UserInfo requestUserDetails) {
         try {
-            if(oauth.access_token==null)
-                oauth.access_token=oauth.OauthGetToken();
+            if(oauth.access_token==null) {
+                oauth.access_token = oauth.OauthGetToken();
+            }
 
             RestTemplate restTemplate = new RestTemplate();
 
@@ -92,10 +93,12 @@ public class UserController {
 
     @GetMapping("/user.get{uuid}")
     public ResponseEntity getUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
-        if(oauth.OauthCheckToken(token)==false)
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_USERS_GET)
                     .queryParam("uuid", uuid);
@@ -119,6 +122,9 @@ public class UserController {
     public ResponseEntity getUserAll(@RequestHeader(value="Authorization",required = false) String token) {
         if(oauth.OauthCheckToken(token)==false) {
             return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
         }
 
         try {
@@ -144,8 +150,10 @@ public class UserController {
     public ResponseEntity loginUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
 
         try {
-            if(oauth.access_token==null)
-                oauth.access_token=oauth.OauthGetToken();
+
+            if(oauth.access_token==null) {
+                oauth.access_token = oauth.OauthGetToken();
+            }
             RestTemplate restTemplate = new RestTemplate();
 
             String url = URL_API_USERS_LOGIN;
@@ -170,10 +178,12 @@ public class UserController {
 
     @PutMapping("/user.updateUUID")
     public ResponseEntity updateUuidUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
-        if(oauth.OauthCheckToken(token)==false)
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders userInfohead = new HttpHeaders();
@@ -204,10 +214,12 @@ public class UserController {
 
     @PutMapping("/user.updateVK")
     public ResponseEntity updateVkUser(@RequestHeader(value="Authorization",required = false) String token,@RequestBody UserInfo requestUserDetails) {
-        if(oauth.OauthCheckToken(token)==false)
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders userInfohead = new HttpHeaders();
@@ -293,11 +305,12 @@ public class UserController {
 
     @DeleteMapping("/user.delete{uuid}")
     public ResponseEntity deleteUser(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
-        if(oauth.OauthCheckToken(token)==false)
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
-
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization","Bearer "+oauth.access_token);
         HttpEntity<String> entity = new HttpEntity<>(headers);

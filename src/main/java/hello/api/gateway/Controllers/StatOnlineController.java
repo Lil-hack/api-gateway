@@ -28,10 +28,12 @@ public class StatOnlineController {
 
     @PostMapping("/statOnline.create")
     public ResponseEntity getStatOnlineCreate(@RequestHeader(value="Authorization",required = false) String token, @RequestBody UserInfo info) {
-        if(oauth.OauthCheckToken(token)==false)
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
 
             RestTemplate restTemplate = new RestTemplate();
@@ -56,10 +58,12 @@ public class StatOnlineController {
 
     @GetMapping("/statOnline.getAll")
     public ResponseEntity getStatOnlineAll(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
-        if(oauth.OauthCheckToken(token)==false)
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_ALL_STATS)
                     .queryParam("uuid", uuid);
@@ -83,10 +87,12 @@ public class StatOnlineController {
 
     @GetMapping("/statOnline.getDay")
     public ResponseEntity getStatOnlineDay(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
-        if(oauth.OauthCheckToken(token)==false)
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_DAY_STATS)
                     .queryParam("uuid", uuid);
@@ -110,10 +116,12 @@ public class StatOnlineController {
 
     @GetMapping("/statOnline.getWeek")
     public ResponseEntity getStatOnlineWeek(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
-        if(oauth.OauthCheckToken(token)==false)
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_WEEK_STATS)
                     .queryParam("uuid", uuid);
@@ -136,10 +144,12 @@ public class StatOnlineController {
 
     @GetMapping("/statOnline.getMonth")
     public ResponseEntity getStatOnlineMonth(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid) {
-        if(oauth.OauthCheckToken(token)==false)
-            return   new ResponseEntity(ErrorCodes.ERROR_401.error(),HttpStatus.UNAUTHORIZED);
-        if(oauth.access_token==null)
-            oauth.access_token=oauth.OauthGetToken();
+        if(oauth.OauthCheckToken(token)==false) {
+            return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
+        }
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_API_STATONLINE_FIND_MONTH_STATS)
                     .queryParam("uuid", uuid);
@@ -163,12 +173,12 @@ public class StatOnlineController {
     @GetMapping("/statAll.get")
     public ResponseEntity getStatOnline(@RequestHeader(value="Authorization",required = false) String token,@RequestParam UUID uuid,@RequestParam String vk) {
         System.out.println("token"+token);
-        if(oauth.OauthCheckToken(token)==false)
-        {
+        if(oauth.OauthCheckToken(token)==false) {
             return new ResponseEntity(ErrorCodes.ERROR_401.error(), HttpStatus.UNAUTHORIZED);
-
         }
-
+        if(oauth.access_token==null) {
+            oauth.access_token = oauth.OauthGetToken();
+        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + oauth.access_token);
