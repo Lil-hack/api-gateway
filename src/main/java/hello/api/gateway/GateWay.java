@@ -83,7 +83,7 @@ public class GateWay {
     public static final String URL_API_STATONLINE_DELETE = URL_API_STATONLINE.concat("delete");
 
     //----------------------------------OAUTH2  API----------------------------------------
-    public static final String URL_API_OAUTH = "http://ec2-3-121-229-80.eu-central-1.compute.amazonaws.com:8090";
+    public static final String URL_API_OAUTH = "http://ec2-52-59-241-115.eu-central-1.compute.amazonaws.com:8090";
 
     public static final String AUTH_CODE_URI = URL_API_OAUTH.concat("/oauth20/auth-codes");
     public static final String ACCESS_TOKEN_URI = URL_API_OAUTH.concat("/oauth20/tokens");
